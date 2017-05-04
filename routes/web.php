@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+<<<<<<< HEAD
     return view('admin.index');
 });
 Route::get('/about-us', function () {
@@ -24,3 +25,7 @@ Route::get('/subject', function () {
     return view('subject');
 });
 //Route::resource('admin/data','Admin\DataController');
+=======
+    return view('index');
+});
+>>>>>>> develop
