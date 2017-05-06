@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <title>Home | Corlate</title>
 
-	<!-- core CSS -->
+  <!-- core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
