@@ -61,7 +61,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="{{ url('/admin/promotions') }}">
                         <i class="pe-7s-user"></i>
                         <p>Promotions</p>
@@ -73,12 +73,12 @@
                         <p>Students</p>
                     </a>
                 </li>
-								<li>
-										<a href="{{ url('/admin/courses') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>Courses</p>
-										</a>
-								</li>
+                <li class="active">
+                    <a href="{{ url('/admin/courses') }}">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Courses</p>
+                    </a>
+                </li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -117,7 +117,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Promotions</a>
+                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Courses</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -201,7 +201,7 @@
 
 										<div class="card">
 													<div class="header">
-															<h4 class="title">All Promotions</h4>
+															<h4 class="title">All Courses</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
 													<div class="content table-responsive table-full-width" id="vue-app">
@@ -212,23 +212,17 @@
 														<tr>
 																<th>ID</th>
 																<th>Name</th>
-																<th>Image</th>
-																<th>startdate</th>
-																<th>expdate</th>
-																<th>type</th>
-																<th>total</th>
-																<th>description</th>
+																<th>Type</th>
+																<th>Price</th>
+																<th>Description</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr v-for="d in data">
 																<td>@{{ d.id }}</td>
 																<td>@{{ d.name }}</td>
-																<td>@{{ d.img }}</td>
-																<td>@{{ d.startdate }}</td>
-																<td>@{{ d.expdate }}</td>
 																<td>@{{ d.type }}</td>
-																<td>@{{ d.total }}</td>
+																<td>@{{ d.price }}</td>
 																<td>@{{ d.description }}</td>
 														</tr>
 													</tbody>
@@ -291,7 +285,7 @@
 
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Promotion</h4>
+		          <h4 class="modal-title">Add Course</h4>
 		        </div>
 		        <div class="modal-body">
 							<!-- <div class="form-group">
@@ -413,76 +407,6 @@
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="/js/admin/demo.js"></script>
 	<script src="/js/app.js" charset="utf-8"></script>
-<script>
 
-
-
-    var data = <?php echo $resBody; ?>;
-
-
-    var vm = new Vue({
-        el: '#vue-app',
-        data:data
-    });
-
-		var vm = new Vue({
-    el: '#vue-add-promotion',
-    data: {
-        'name': '',
-        'img': '',
-        'startdate': '',
-        'expdate': '',
-        'type': '',
-        'total': '',
-        'descript': ''
-
-
-
-
-    },
-    methods: {
-			clearFormPro: function (){
-				this.name = "";
-				this.startdate="";
-				this.expdate="";
-				this.total="";
-				this.descript="";
-			},
-        submit: function () {
-            axios.post('http://languagecenter.dev/api/promotions', {
-                name: this.name,
-                img: this.img,
-                startdate: this.startdate,
-                expdate: this.expdate,
-                type: this.type,
-                total: this.total,
-                descript: this.descript
-
-            }).then(function (response) {
-                console.log(response.data.data);
-                alert(response.data.data);
-								this.name = "";
-								this.total="";
-								this.descript="";
-								$(document).ready(function(){
-									$('#addPromo').on('hidden.bs.modal', function (e) {
-
-											location.reload();
-
-									})
-								});
-
-            }).catch(function (error) {
-
-                alert('Error (see console log)');
-                console.log(error);
-
-            });
-
-        }
-
-    }
-});
-</script>
 
 </html>

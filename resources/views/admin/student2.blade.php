@@ -61,25 +61,25 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="{{ url('/admin/promotions') }}">
                         <i class="pe-7s-user"></i>
                         <p>Promotions</p>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url('/admin/students') }}">
-                        <i class="pe-7s-note2"></i>
-                        <p>Students</p>
-                    </a>
-                </li>
-								<li>
-										<a href="{{ url('/admin/courses') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>Courses</p>
+								<li class="active">
+										<a href="{{ url('/admin/students') }}">
+												<i class="pe-7s-note2"></i>
+												<p>Students</p>
 										</a>
 								</li>
-                <!-- <li>
+                <li>
+                    <a href="typography.html">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>Typography</p>
+                    </a>
+                </li>
+                <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
                         <p>Icons</p>
@@ -102,7 +102,7 @@
                         <i class="pe-7s-rocket"></i>
                         <p>Upgrade to PRO</p>
                     </a>
-                </li> -->
+                </li>
             </ul>
     	</div>
     </div>
@@ -117,7 +117,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Promotions</a>
+                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Students</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -178,14 +178,14 @@
                         </li>
                         <li>
 													<a href="{{ route('logout') }}"
-															onclick="event.preventDefault();
-														  document.getElementById('logout-form').submit();">
-														  Logout
-													</a>
+																					onclick="event.preventDefault();
+																									 document.getElementById('logout-form').submit();">
+																					Logout
+																			</a>
 
-													<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-															{{ csrf_field() }}
-													</form>
+																			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+																					{{ csrf_field() }}
+																			</form>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>
@@ -200,47 +200,12 @@
 									<div class="col-md-12">
 
 										<div class="card">
-													<div class="header">
-															<h4 class="title">All Promotions</h4>
-															<!-- <p class="category">Here is a subtitle for this table</p> -->
-													</div>
-													<div class="content table-responsive table-full-width" id="vue-app">
-
-
-													<table class="table table-hover table-striped">
-													<thead>
-														<tr>
-																<th>ID</th>
-																<th>Name</th>
-																<th>Image</th>
-																<th>startdate</th>
-																<th>expdate</th>
-																<th>type</th>
-																<th>total</th>
-																<th>description</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr v-for="d in data">
-																<td>@{{ d.id }}</td>
-																<td>@{{ d.name }}</td>
-																<td>@{{ d.img }}</td>
-																<td>@{{ d.startdate }}</td>
-																<td>@{{ d.expdate }}</td>
-																<td>@{{ d.type }}</td>
-																<td>@{{ d.total }}</td>
-																<td>@{{ d.description }}</td>
-														</tr>
-													</tbody>
-													</table>
-													</div>
-
 
 											</div>
 										</div>
 									</div>
 
- 									<button type="button" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add promotions</button>
+
 
 
 
@@ -283,106 +248,6 @@
 					</footer>
         </div>
     </div>
-		  <div class="modal fade" id="addPromo" role="dialog">
-		    <div class="modal-dialog">
-		      <!-- Modal content-->
-		      <div class="modal-content">
-						<div id="vue-add-promotion">
-
-		        <div class="modal-header">
-		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Promotion</h4>
-		        </div>
-		        <div class="modal-body">
-							<!-- <div class="form-group">
-							        <label for="name">Promotion Name</label>
-							        <input type="text" class="form-control" v-model="name" id="name" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="img">Image</label>
-							        <input type="file" class="form-control"  id="img" v-model="img" accept="image/*" required>
-							</div>
-							<div class="form-group">
-							        <label for="startdate">Start Date</label>
-							        <input type="date" class="form-control" v-model="startdate" id="startdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="expdate">Exp Date</label>
-							        <input type="date" class="form-control" v-model="expdate" id="expdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="type">Discount Type</label>
-											<select  class="form-control" v-model="type" required>
-				                   <option value="" disabled selected>Please select type</option>
-				                   <option value="percent" >Percent</option>
-				                   <option value="baht" >Baht</option>
-				                 </select>
-							</div>
-
-							<div class="form-group">
-							        <label for="total">Discount Rate</label>
-							        <input type="text" class="form-control" v-model="total" id="total" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="descript">Descript</label>
-							       <textarea  class="form-control" rows="7" cols="60" name="des" placeholder="----description---" v-model="descript" > </textarea>
-							</div>
-							<button class="btn btn-success btn-fill" v-on:click="submit()">Submit</button> -->
-							<form class="form-horizontal" role="form" method="POST" v-on:submit.prevent="submit">
-									{{ csrf_field() }}
-
-									<div class="form-group">
-									        <label for="name">Promotion Name</label>
-									        <input type="text" class="form-control" name="name" v-model="name" id="name" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="img">Image</label>
-									        <input type="file" class="form-control"  id="img" name="img"  v-model="img" accept="image/*" required>
-									</div>
-									<div class="form-group">
-									        <label for="startdate">Start Date</label>
-									        <input type="date" class="form-control" name="startdate" id="startdate" v-model="startdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="expdate">Exp Date</label>
-									        <input type="date" class="form-control" name="expdate" id="expdate" v-model="expdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="type">Discount Type</label>
-													<select  class="form-control" name="type" v-model="type" id="type" required>
-						                   <option value="" disabled selected>Please select type</option>
-						                   <option value="percent" >Percent</option>
-						                   <option value="baht" >Baht</option>
-						                 </select>
-									</div>
-
-									<div class="form-group">
-									        <label for="total">Discount Rate</label>
-									        <input type="text" class="form-control" name="total" v-model="total" id="total" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="descript">Descript</label>
-									       <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" v-model="descript" > </textarea>
-									</div>
-									<button class="btn btn-success btn-fill" type="submit">Submit</button>
-
-							</form>
-
-		        </div>
-
-
-
-
-
-		        <div class="modal-footer">
-		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
-		        </div>
-					</div>
-
-		      </div>
-
-		    </div>
-		  </div>
 
 
 
@@ -392,7 +257,7 @@
 </body>
 
     <!--   Core JS Files   -->
-		<script src="/js/admin/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/js/admin/jquery-1.10.2.js" type="text/javascript"></script>
 	<script src="/js/admin/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
@@ -415,74 +280,6 @@
 	<script src="/js/app.js" charset="utf-8"></script>
 <script>
 
-
-
-    var data = <?php echo $resBody; ?>;
-
-
-    var vm = new Vue({
-        el: '#vue-app',
-        data:data
-    });
-
-		var vm = new Vue({
-    el: '#vue-add-promotion',
-    data: {
-        'name': '',
-        'img': '',
-        'startdate': '',
-        'expdate': '',
-        'type': '',
-        'total': '',
-        'descript': ''
-
-
-
-
-    },
-    methods: {
-			clearFormPro: function (){
-				this.name = "";
-				this.startdate="";
-				this.expdate="";
-				this.total="";
-				this.descript="";
-			},
-        submit: function () {
-            axios.post('http://languagecenter.dev/api/promotions', {
-                name: this.name,
-                img: this.img,
-                startdate: this.startdate,
-                expdate: this.expdate,
-                type: this.type,
-                total: this.total,
-                descript: this.descript
-
-            }).then(function (response) {
-                console.log(response.data.data);
-                alert(response.data.data);
-								this.name = "";
-								this.total="";
-								this.descript="";
-								$(document).ready(function(){
-									$('#addPromo').on('hidden.bs.modal', function (e) {
-
-											location.reload();
-
-									})
-								});
-
-            }).catch(function (error) {
-
-                alert('Error (see console log)');
-                console.log(error);
-
-            });
-
-        }
-
-    }
-});
 </script>
 
 </html>

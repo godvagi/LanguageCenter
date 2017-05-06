@@ -18,6 +18,7 @@ class CreatePromotionsTable extends Migration
           $table->string('name');
           $table->string('startdate');
           $table->string('expdate');
+          $table->string('img');
           $table->string('type');
           $table->integer('total');
           $table->string('description');

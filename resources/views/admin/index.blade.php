@@ -63,19 +63,19 @@
                         <p>Promotions</p>
                     </a>
                 </li>
-                <li>
-                    <a href="table.html">
-                        <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="typography.html">
+								<li >
+										<a href="{{ url('/admin/students') }}">
+												<i class="pe-7s-note2"></i>
+												<p>Students</p>
+										</a>
+								</li>
+								<li>
+                    <a href="{{ url('/admin/courses') }}">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>Courses</p>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
                         <p>Icons</p>
@@ -98,7 +98,7 @@
                         <i class="pe-7s-rocket"></i>
                         <p>Upgrade to PRO</p>
                     </a>
-                </li>
+                </li> -->
             </ul>
     	</div>
     </div>
@@ -173,9 +173,15 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+													<a href="{{ route('logout') }}"
+															onclick="event.preventDefault();
+														  document.getElementById('logout-form').submit();">
+														  Logout
+													</a>
+
+													<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+															{{ csrf_field() }}
+													</form>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>

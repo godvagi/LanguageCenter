@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PromotionsController extends Controller
+class CoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,7 @@ class PromotionsController extends Controller
      */
     public function index()
     {
-      $promotions = \App\Promotion::all();
-      return [
-          'success' => true,
-          'data' => $promotions
-      ];
-
+        //
     }
 
     /**
@@ -40,26 +35,7 @@ class PromotionsController extends Controller
      */
     public function store(Request $request)
     {
-      $promotion = new \App\Promotion;
-      $promotion->name = trim($request->name);
-      $promotion->startdate = trim($request->startdate);
-      $promotion->expdate = trim($request->expdate);
-      $promotion->img = trim($request->img);
-      $promotion->type = trim($request->type);
-      $promotion->total = $request->total;
-      $promotion->description = trim($request->descript);
-      if (!empty($promotion->name) && $promotion->save()){
-          return [
-            'success' => true,
-            'data' => "Promotion '{$promotion->name}' was saved with id: {$promotion->id}",
-            'id' => $promotion->id
-        ];
-      } else {
-          return [
-              'success' => false,
-              'data' => "Some error occurred"
-            ];
-      }
+        //
     }
 
     /**
