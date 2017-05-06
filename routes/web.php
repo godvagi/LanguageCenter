@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-<<<<<<< HEAD
+
     return view('admin.index');
 });
 Route::get('/about-us', function () {
@@ -24,8 +24,10 @@ Route::get('/login', function () {
 Route::get('/subject', function () {
     return view('subject');
 });
-//Route::resource('admin/data','Admin\DataController');
-=======
-    return view('index');
+
+Route::get('/log', function () {
+    return view('log');
 });
->>>>>>> develop
+Route::get('/profile', function () {
+    return view('profile');
+});

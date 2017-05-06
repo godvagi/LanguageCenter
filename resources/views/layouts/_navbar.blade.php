@@ -61,4 +61,8 @@
             </div><!--/.container-->
         </nav><!--/nav-->
 
-    </header><!--/header-->
+    </header><!--/header-->   
+     <main>
+      @yield('content1')
+    </main>
+
