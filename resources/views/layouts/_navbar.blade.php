@@ -54,11 +54,10 @@
 
                         <!-- คอร์ส -->
                         <li><a href="/course"
-                            onclick="event.preventDefault();
-                                     document.getElementById('download').submit();">
+                            >
                           คอร์สเรียน
                         </a>
-                        <form id="download" action="/course" method="get" style="display: none;">
+                        <form id="course" action="/course" method="get" style="display: none;">
                           <input type='hidden' name='username' value="{{$username}}">
                             {{ csrf_field() }}
                         </form></li>

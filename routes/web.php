@@ -23,3 +23,5 @@ Route::post('/reserveme','reserveController@reserve');
 Route::post('/reservedel','reserveController@delReserve');
 Route::get('/reserve','reserveController@showReserve');
 Route::get('/getPDF','PDFController@getPDF');
+Route::get('/service','PDFController@getPDF');
+Route::get('/course','CourseController@getCourse');
