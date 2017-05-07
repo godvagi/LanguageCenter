@@ -17,3 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resource('promotions', 'Api\PromotionsController');
+Route::resource('students', 'Api\StudentsController');
+// Route::resource('promotions', 'Api\PromotionsController');

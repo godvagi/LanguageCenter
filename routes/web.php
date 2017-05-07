@@ -22,14 +22,16 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home', 'HomeController@admin');
-Route::get('admin/promotions', 'PromotionsController@index');
-Route::get('admin/students', 'StudentsController@index');
-Route::get('admin/courses', 'CoursesController@index');
+// Route::get('admin/promotions', 'PromotionsController@index');
+
 
 Route::group(['middleware' => 'auth'],function(){
     Route::get('/admin',function(){
       return view('admin.index');
     })->name('admin');
+    Route::get('admin/students', 'StudentsController@index')->name('admin');
+    Route::get('admin/courses', 'CoursesController@index');
+
     Route::get('admin/promotions', 'PromotionsController@index')->name('admin');
     Route::get('/student',function(){
       return view('student.index');

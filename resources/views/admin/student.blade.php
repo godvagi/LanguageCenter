@@ -248,12 +248,13 @@
                                 <p class="category"></p>
                             </div>
                             <div class="content">
-															<form>
+
+																<div id='vue-add-course'>
 																<div class="row">
 																		<div class="col-md-12">
 																				<div class="form-group">
 																						<label>E-mail Address</label>
-																						<input type="email" class="form-control" placeholder="E-mail" required>
+																						<input type="email" class="form-control" v-modal:='cEmail' placeholder="E-mail" required>
 																				</div>
 																		</div>
 																</div>
@@ -261,14 +262,15 @@
 																		<div class="col-md-12">
 																				<div class="form-group">
 																						<label>Course ID</label>
-																						<input type="text" class="form-control" placeholder="Course ID" required>
+																						<input type="text" class="form-control" v-modal:='cCourseID' placeholder="Course ID" required>
 																				</div>
 																		</div>
 																</div>
-
-																	<button type="submit" class="btn btn-info btn-fill pull-right">Add Course For Students</button>
+																	<button class="btn btn-info btn-fill pull-right" v-on:click="submitAddCourse()">Add Course For Students</button>
+																	<!-- <button v-on:click='submitAddCourse' class="btn btn-info btn-fill pull-right">Add Course For Students</button> -->
 																	<div class="clearfix"></div>
-															</form>
+																</div>
+
                             </div>
                         </div>
                     </div>
@@ -337,22 +339,43 @@
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="/js/admin/demo.js"></script>
+	<script src="/js/app.js" charset="utf-8"></script>
 
-	<script type="text/javascript">
-    	// $(document).ready(function(){
-			//
-      //   	demo.initChartist();
-			//
-      //   	$.notify({
-      //       	icon: 'pe-7s-gift',
-      //       	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-			//
-      //       },{
-      //           type: 'info',
-      //           timer: 1000
-      //       });
-			//
-    	// });
-	</script>
+
+<script >
+
+
+		var vm = new Vue({
+    el: '#vue-add-course',
+    data: {
+        'cEmail': '',
+        'cCourseID': ''
+
+
+
+    },
+    methods: {
+
+        submitAddCourse: function () {
+						// alert('halo');
+            axios.post('http://languagecenter.dev/api/students', {
+                email: this.cEmail,
+                courseID: this.cCourseID
+
+            }).then(function (response) {
+                console.log(response.data.data);
+                alert(response.data.data);
+            }).catch(function (error) {
+
+                alert('Error (see console log)');
+                console.log(error);
+
+            });
+
+        }
+
+    }
+});
+</script>
 
 </html>

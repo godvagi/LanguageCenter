@@ -207,6 +207,7 @@
 													<div class="content table-responsive table-full-width" id="vue-app">
 
 
+
 													<table class="table table-hover table-striped">
 													<thead>
 														<tr>
@@ -328,7 +329,9 @@
 							       <textarea  class="form-control" rows="7" cols="60" name="des" placeholder="----description---" v-model="descript" > </textarea>
 							</div>
 							<button class="btn btn-success btn-fill" v-on:click="submit()">Submit</button> -->
-							<form class="form-horizontal" role="form" method="POST" v-on:submit.prevent="submit">
+<!--
+							<form class="form-horizontal" id="data" role="form" method="POST" v-on:submit.prevent="submit" enctype="multipart/form-data">
+
 									{{ csrf_field() }}
 
 									<div class="form-group">
@@ -337,7 +340,7 @@
 									</div>
 									<div class="form-group">
 									        <label for="img">Image</label>
-									        <input type="file" class="form-control"  id="img" name="img"  v-model="img" accept="image/*" required>
+									        <input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
 									</div>
 									<div class="form-group">
 									        <label for="startdate">Start Date</label>
@@ -361,17 +364,62 @@
 									        <input type="text" class="form-control" name="total" v-model="total" id="total" placeholder="" required>
 									</div>
 									<div class="form-group">
-									        <label for="descript">Descript</label>
+									        <label for="descript">Description</label>
 									       <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" v-model="descript" > </textarea>
 									</div>
 									<button class="btn btn-success btn-fill" type="submit">Submit</button>
 
-							</form>
+							</form> -->
+
+							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
+								<div class="form-group">
+												<label for="name">Promotion Name</label>
+												<input type="text" class="form-control" name="name"  id="name" placeholder="" required>
+								</div>
+								<!-- <div class="form-group">
+												<label for="img">Image</label>
+												<input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
+								</div> -->
+								<div class="form-group">
+		                <div v-if="!image">
+		                    <h2>Select an image</h2>
+		                    </div>
+		                <div v-else>
+		                    <img :src="image" />
+		                    <button @click="removeImage">Remove image</button>
+		                </div>
+		                <input name="image" id="image" type="file" class="form-control" @change="onFileChange">
+		            </div>
+								<div class="form-group">
+												<label for="startdate">Start Date</label>
+												<input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="expdate">Exp Date</label>
+												<input type="date" class="form-control" name="expdate" id="expdate"  placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="type">Discount Type</label>
+												<select  class="form-control" name="type"  id="type" required>
+														 <option value="" disabled selected>Please select type</option>
+														 <option value="percent" >Percent</option>
+														 <option value="baht" >Baht</option>
+													 </select>
+								</div>
+
+								<div class="form-group">
+												<label for="total">Discount Rate</label>
+												<input type="text" class="form-control" name="total" id="total" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="descript">Description</label>
+											 <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" > </textarea>
+								</div>
+
+            <button class="btn btn-success btn-fill" type="submit">Add Promotions</button>
+        </form>
 
 		        </div>
-
-
-
 
 
 		        <div class="modal-footer">
@@ -413,64 +461,25 @@
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="/js/admin/demo.js"></script>
 	<script src="/js/app.js" charset="utf-8"></script>
+
 <script>
 
 
 
-    var data = <?php echo $resBody; ?>;
-
-
-    var vm = new Vue({
-        el: '#vue-app',
-        data:data
-    });
-
 		var vm = new Vue({
-    el: '#vue-add-promotion',
-    data: {
-        'name': '',
-        'img': '',
-        'startdate': '',
-        'expdate': '',
-        'type': '',
-        'total': '',
-        'descript': ''
+        el: '#vue-app',
+        data:{
+					'data':[]
+				},
 
+				methods:{
+					getPromotions: function(){
+						axios.get('http://languagecenter.dev/api/promotions', {
 
-
-
-    },
-    methods: {
-			clearFormPro: function (){
-				this.name = "";
-				this.startdate="";
-				this.expdate="";
-				this.total="";
-				this.descript="";
-			},
-        submit: function () {
-            axios.post('http://languagecenter.dev/api/promotions', {
-                name: this.name,
-                img: this.img,
-                startdate: this.startdate,
-                expdate: this.expdate,
-                type: this.type,
-                total: this.total,
-                descript: this.descript
 
             }).then(function (response) {
                 console.log(response.data.data);
-                alert(response.data.data);
-								this.name = "";
-								this.total="";
-								this.descript="";
-								$(document).ready(function(){
-									$('#addPromo').on('hidden.bs.modal', function (e) {
-
-											location.reload();
-
-									})
-								});
+								if(response.data.success) vm.data = response.data.data;
 
             }).catch(function (error) {
 
@@ -478,11 +487,86 @@
                 console.log(error);
 
             });
+					}
 
-        }
+				}
+    });
 
+		var vm2 = new Vue({
+    el: '#vue-add-promotion',
+    data: {
+        'image':''
+
+    },
+		  mounted: function(){
+				vm.getPromotions();
+			},
+    methods: {
+           onFileChange(e) {
+             var files = e.target.files || e.dataTransfer.files;
+             if (!files.length)
+               return;
+             this.createImage(files[0]);
+           },
+           createImage(file) {
+             var image = new Image();
+             var reader = new FileReader();
+             var vm4 = this;
+             reader.onload = (e) => {
+               vm4.image = e.target.result;
+             };
+             reader.readAsDataURL(file);
+           },
+           removeImage: function (e) {
+             this.image = '';
+           },
+           submitForm :function(){
+               var form = document.querySelector('#addForm');
+               var formdata = new FormData(form);
+               console.log(formdata);
+               jQuery.ajax({
+              url: '/api/promotions',
+              data: formdata,
+              cache: false,
+              contentType: false,
+              processData: false,
+              type: 'POST',
+              success: function(data){
+								vm.getPromotions();
+                alert(data);
+              }
+            });
+           }
     }
 });
+
+// new Vue({
+//   el: '#app',
+//   data: {
+//     image: ''
+//   },
+//   methods: {
+//     onFileChange(e) {
+//       var files = e.target.files || e.dataTransfer.files;
+//       if (!files.length)
+//         return;
+//       this.createImage(files[0]);
+//     },
+//     createImage(file) {
+//       var image = new Image();
+//       var reader = new FileReader();
+//       var vm = this;
+//
+//       reader.onload = (e) => {
+//         vm.image = e.target.result;
+//       };
+//       reader.readAsDataURL(file);
+//     },
+//     removeImage: function (e) {
+//       this.image = '';
+//     }
+//   }
+// })
 </script>
 
 </html>

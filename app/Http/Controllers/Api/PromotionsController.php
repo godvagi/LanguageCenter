@@ -44,10 +44,14 @@ class PromotionsController extends Controller
       $promotion->name = trim($request->name);
       $promotion->startdate = trim($request->startdate);
       $promotion->expdate = trim($request->expdate);
-      $promotion->img = trim($request->img);
       $promotion->type = trim($request->type);
       $promotion->total = $request->total;
       $promotion->description = trim($request->descript);
+      if ($file = $request->file('image')) {
+        $name = time() . $file->getClientOriginalName();
+        $file->move('images/promotions', $name);
+        $promotion->img = $name;
+      }
       if (!empty($promotion->name) && $promotion->save()){
           return [
             'success' => true,
@@ -60,6 +64,9 @@ class PromotionsController extends Controller
               'data' => "Some error occurred"
             ];
       }
+
+
+
     }
 
     /**
