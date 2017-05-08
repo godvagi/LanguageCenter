@@ -36,7 +36,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="index.html"><img src="images/ezLogo.png" alt="logo" style="width:55px;height:55px;"><img src="images/easy language.png" alt="logo" style="width:115px;height:52px;"></a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-right">
@@ -74,11 +74,11 @@
                             {{ csrf_field() }}
                         </form></li>
 
-                        <!-- ติดต่อ -->
+                        <!-- เกี่ยวกับเรา -->
                         <li><a href="/about-us"
                             onclick="event.preventDefault();
                                      document.getElementById('about').submit();">
-                          ติดต่อเรา
+                          เกี่ยวกับเรา
                         </a>
                         <form id="about" action="/about-us" method="get" style="display: none;">
                             <input type='hidden' name='username' value="{{$username}}">

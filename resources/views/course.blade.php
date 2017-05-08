@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<title>Course</title>
+<title>Course | EZ</title>
 <section id="feature" >
     <div class="container">
        <div class="center wow fadeInDown">
