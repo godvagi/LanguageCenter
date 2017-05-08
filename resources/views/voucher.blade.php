@@ -43,6 +43,62 @@
 
 @extends('layouts._navbar')
 @section('content1')
+<section id="main-slider" class="no-margin">
+    <div class="carousel slide">
+        <ol class="carousel-indicators">
+          <?php $num=0; ?>
+          @foreach($pro as $p)
+          @if($p->active == 1)
+          @if($num==0)
+            <li data-target="#main-slider" data-slide-to="{{$num}}" class="active"></li>
+          @else
+            <li data-target="#main-slider" data-slide-to="{{$num}}"></li>
+          @endif
+            <?php $num+=1; ?>
+            @else
+            @endif
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+          <?php $count=0; ?>
+          @foreach($pro as $p)
+          @if($p->active == 1)
+          @if($count==0)
+            <div class="item active"  style="background-image: url(images/slider/bg1.jpg)">
+                <div class="container">
+                    <div class="row slide-margin">
+                    	<div class="col-sm-12">
+                    		<img src="{{$p->img}}" class="img-responsive">
+                    	</div>
+                    </div>
+                </div>
+            </div><!--/.item-->
+            @else
+            <div class="item"  style="background-image: url(images/slider/bg1.jpg)">
+                <div class="container">
+                    <div class="row slide-margin">
+                    	<div class="col-sm-12">
+                    		<img src="{{$p->img}}" class="img-responsive">
+                    	</div>
+                    </div>
+                </div>
+            </div><!--/.item-->
+            @endif
+            <?php $count+=1; ?>
+            @else
+            @endif
+            @endforeach
+
+        </div><!--/.carousel-inner-->
+    </div><!--/.carousel-->
+    <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <i class="fa fa-chevron-left"></i>
+    </a>
+    <a class="next hidden-xs" href="#main-slider" data-slide="next">
+        <i class="fa fa-chevron-right"></i>
+    </a>
+</section><!--/#main-slider-->
+
 <div class="container">
     <form action="/exchange" method="post">
       <input type='hidden' name='_token' value="{{ csrf_token() }}">

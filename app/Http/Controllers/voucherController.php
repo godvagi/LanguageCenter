@@ -10,31 +10,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Voucher;
 use PDF;
+use Illuminate\Support\Facades\Auth;
 class voucherController extends BaseController
 {
 
     public function getVoucher(Request $r){
-      $pro = DB::table('promotion')
-                  ->select('pro_id','name','point')
+      $promo = DB::table('promotions')
+                  ->select('pro_id','name','point','img','active','startdate','expdate')
                   ->get();
       $user = DB::table('users')
                   ->select('point')
-                  ->where('email','=',$r->input('username'))
+                  ->where('email','=',Auth::user()->email)
                   ->get();
       return view('voucher',[
-        'username' => $r->input('username'),
+        'username' => Auth::user()->email,
         'user' => $user,
-        'pro' => $pro
+        'pro' => $promo
       ]);
     }
     public function exchange(Request $r){
 
-      $promo = DB::table('promotion')
-                  ->select('pro_id','name','point')
+      $promo = DB::table('promotions')
+                  ->select('pro_id','name','point','active','startdate','expdate')
                   ->where('name','=',$r->input('promotion'))
                   ->get();
       $pro = DB::table('promotion')
-                  ->select('pro_id','name','point')
+                  ->select('pro_id','name','active','point')
                   ->get();
 
       foreach ($promo as $k) {
@@ -43,29 +44,35 @@ class voucherController extends BaseController
         $obj->code = '';
         $obj->save();
 
+      $point = $k->point;
       $vouchers = DB::table('voucher')
                     ->select('id','pro_id')
                     ->max('id');
 
       $update =  DB::table('users')
                     ->select('point')
-                    ->where('email','=',$r->input('username'))
+                    ->where('email','=',Auth::user()->email)
                     ->update([
-                      'point' =>  (($r->input('point'))-($k->point)) ,
+                      'password' => '1234',
+                      'point' => (($r->input('point'))-($point)) ,
                     ]);
-      $point = $k->point;
+
       $proid = $k->pro_id;
+      $startdate = $k->startdate;
+      $expdate = $k->expdate;
       }
       $user = DB::table('users')
                   ->select('point')
-                  ->where('email','=',$r->input('username'))
+                  ->where('email','=',Auth::user()->email)
                   ->get();
 
       $pdf=PDF::loadView('pdf.barcode',[
         'voucher' => $vouchers,
-        'username' => $r->input('username'),
+        'username' => Auth::user()->email,
         'pro_id' => $proid,
-        'point' => $point
+        'point' => $point,
+        'startdate' =>$startdate,
+        'expdate' =>$expdate
       ]);
       return $pdf->download('voucher.pdf');
       // return view('voucher',[

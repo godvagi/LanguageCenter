@@ -7,6 +7,7 @@
     <meta name="author" content="">
     <title>Home | EZ</title>
 
+
 	<!-- core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -26,7 +27,6 @@
 </head><!--/head-->
 
 <body class="homepage">
-
     @include('layouts._navbar')
 
     @yield('content')

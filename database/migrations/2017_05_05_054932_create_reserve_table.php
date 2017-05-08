@@ -13,7 +13,7 @@ class CreateReserveTable extends Migration
      */
     public function up()
     {
-      Schema::create('reserve', function (Blueprint $table) {
+      Schema::create('reserves', function (Blueprint $table) {
       $table->increments('i');
       $table->integer('id');
       $table->string('date')->nullable();
@@ -33,6 +33,6 @@ class CreateReserveTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reserve');
+        Schema::dropIfExists('reserves');
     }
 }

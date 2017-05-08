@@ -78,7 +78,7 @@
            $count =0;
        ?>
 
-       <input type='hidden' name='username' value="{{$username}}">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+       <input type='hidden' name='username' value="{{Auth::user()->email}}">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
        <button type="submit"  class="btn btn-success" onclick="<script>
          toggle() {
            var div = document.getElementById('contains');
@@ -93,7 +93,7 @@
 </form>
 <form action="/reserveme" method="post">
   <input type='hidden' name='_token' value="{{ csrf_token() }}">
-  <input type='hidden' name='username' value="{{$username}}">
+  <input type='hidden' name='username' value="{{Auth::user()->email}}">
   <input type='hidden' name='date' value="{{$date}}">
   <input type='hidden' name='time' value="{{$time}}">
   <input type='hidden' name='sub_id' value="{{$sub}}">
@@ -106,7 +106,7 @@
          @foreach($num as $k)
            @if(count($data)>($count))
            @if( $data[$count]->status != '' && $data[$count]->id == $k )
-          
+
          <?php $count+=1; ?>
          <button class="btn btn-danger btn-lg" type="submit"  name='id' id="id" value="{{$k}}" disabled> {{$k}}
            @else
@@ -136,19 +136,19 @@
       <table class='table table-condensed'>
         <tr>
           <td>
-            ID
+            เลขที่นั่ง
           </td>
           <td>
-            Subject
+            รหัสคอร์ส
           </td>
           <td>
-            Date
+            วันที่
           </td>
           <td>
-            Time
+            เวลา
           </td>
           <td>
-            Action
+            หมายเหตุ
           </td>
         </tr>
         @foreach($show as $key)
@@ -170,7 +170,7 @@
             <form action="/reservedel" method="post" onsubmit"return(confirm('Do you want to delete this?'))">
                 <input type='hidden' name='_token' value="{{ csrf_token() }}">
                 <input type='hidden' name='i' value="{{$key->i}}">
-                <input type='hidden' name='username' value="{{$username}}">
+                <input type='hidden' name='username' value="{{Auth::user()->email}}">
                 <input type='hidden' name='date' value="{{$date}}">
                 <input type='hidden' name='time' value="{{$time}}">
                 <input type='hidden' name='sub_id' value="{{$key->sub_id}}">

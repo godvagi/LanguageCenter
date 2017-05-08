@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\DB;
 class CourseController extends BaseController
 {
 	public function getCourse(Request $r){
-		return view('course',[
-			'username' => $r->input('username')
-			]);
+		return view('course');
 	}
 }

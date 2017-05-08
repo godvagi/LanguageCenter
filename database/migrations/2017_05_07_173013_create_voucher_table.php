@@ -13,7 +13,7 @@ class CreateVoucherTable extends Migration
      */
     public function up()
     {
-      Schema::create('voucher', function (Blueprint $table) {
+      Schema::create('vouchers', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('pro_id');
           $table->string('code');
@@ -29,6 +29,6 @@ class CreateVoucherTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('voucher');
+        Schema::dropIfExists('vouchers');
     }
 }

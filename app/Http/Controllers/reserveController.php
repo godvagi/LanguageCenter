@@ -14,14 +14,14 @@ class reserveController extends BaseController
 {
   public function index(Request $r){
     $sub = '';
-    $sec = DB::table('section')
+    $sec = DB::table('sections')
                      ->select('sub_id','email','time_use','time_left')
                      ->where('email','=',$r->input('username'))
                      ->get();
-    $obj = DB::table('reserve')
+    $obj = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->get();
-    $show = DB::table('reserve')
+    $show = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->where('status','=',$r->input('username'))
                      ->get();
@@ -30,7 +30,7 @@ class reserveController extends BaseController
       'data' => $obj,
       'sub' => $sub,
       'show' => $show,
-      'username' => $r->input('username'),
+       'username' => $r->input('username'),
       'date' => '',
       'time' => ''
     ]);
@@ -47,7 +47,7 @@ class reserveController extends BaseController
 
 
     $sub =  $r->input('sub_id');
-    DB::table('section')
+    DB::table('sections')
             ->where('sub_id', '=',$r->input('sub_id'))
             ->where('email', '=',$r->input('username'))
             ->update([
@@ -55,17 +55,17 @@ class reserveController extends BaseController
               'time_left' => ($r->input('time_left'))-1
             ]);
 
-    $sec = DB::table('section')
+    $sec = DB::table('sections')
             ->select('sub_id','email','time_use','time_left')
             ->where('email','=',$r->input('username'))
             ->get();
 
-    $obj = DB::table('reserve')
+    $obj = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->where('date','=',$r->input('date'))
                      ->where('time','=',$r->input('time'))
                      ->get();
-    $show = DB::table('reserve')
+    $show = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->where('status','=',$r->input('username'))
                      ->get();
@@ -87,16 +87,16 @@ class reserveController extends BaseController
     $time = $r->input('time');
     $username = $r->input('username');
     $sub =  $r->input('sub_id');
-    $sec = DB::table('section')
+    $sec = DB::table('sections')
                      ->select('sub_id','email','time_use','time_left')
                      ->where('email','=',$r->input('username'))
                      ->get();
-    $obj = DB::table('reserve')
+    $obj = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->where('date','=',$date)
                      ->where('time','=',$time)
                      ->get();
-    $show = DB::table('reserve')
+    $show = DB::table('reserves')
                     ->select('i','id','date','time','status','sub_id')
                     ->where('status','=',$username)
                     ->get();
@@ -114,29 +114,29 @@ class reserveController extends BaseController
 
   }
   public function delReserve(Request $r){
-    DB::table('reserve')->where('i', '=', $r->input('i'))->delete();
+    DB::table('reserves')->where('i', '=', $r->input('i'))->delete();
 
     $date = $r->input('date');
     $time = $r->input('time');
     $username = $r->input('username');
     $sub = $r->input('sub_id');
-    DB::table('section')
+    DB::table('sections')
             ->where('sub_id', '=',$r->input('sub_id'))
             ->where('email', '=',$r->input('username'))
             ->update([
               'time_use' => ($r->input('time_use'))-1,
               'time_left' => ($r->input('time_left'))+1
             ]);
-    $sec = DB::table('section')
+    $sec = DB::table('sections')
             ->select('sub_id','email','time_use','time_left')
             ->where('email','=',$r->input('username'))
             ->get();
-    $obj = DB::table('reserve')
+    $obj = DB::table('reserves')
                      ->select('i','id','date','time','status','sub_id')
                      ->where('date','=',$date)
                      ->where('time','=',$time)
                      ->get();
-    $show = DB::table('reserve')
+    $show = DB::table('reserves')
                     ->select('i','id','date','time','status','sub_id')
                     ->where('status','=',$username)
                     ->get();

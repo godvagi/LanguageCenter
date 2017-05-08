@@ -36,7 +36,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/ezLogo.png" alt="logo" style="width:55px;height:55px;"><img src="images/easy language.png" alt="logo" style="width:115px;height:52px;"></a>
+                    <a class="navbar-brand" href="/"><img src="images/ezLogo.png" alt="logo" style="width:55px;height:55px;"><img src="images/easy language.png" alt="logo" style="width:115px;height:52px;"></a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-right">
@@ -48,7 +48,7 @@
                           หน้าแรก
                         </a>
                         <form id="home" action="/" method="get" style="display: none;">
-                            <input type='hidden' name='username' value="{{$username}}">
+
                             {{ csrf_field() }}
                         </form></li>
 
@@ -59,7 +59,7 @@
                           คอร์สเรียน
                         </a>
                         <form id="course" action="/course" method="get" style="display: none;">
-                          <input type='hidden' name='username' value="{{$username}}">
+
                             {{ csrf_field() }}
                         </form></li>
 
@@ -70,7 +70,7 @@
                           ดาวน์โหลดฟอร์ม
                         </a>
                         <form id="load" action="/getPDF" method="get" style="display: none;">
-                            <input type='hidden' name='username' value="{{$username}}">
+
                             {{ csrf_field() }}
                         </form></li>
 
@@ -81,18 +81,18 @@
                           เกี่ยวกับเรา
                         </a>
                         <form id="about" action="/about-us" method="get" style="display: none;">
-                            <input type='hidden' name='username' value="{{$username}}">
+
                             {{ csrf_field() }}
                         </form></li>
 
                        <!-- login -->
-                        @if ($username=='')
+                        @if (Auth::guest())
                             <li><a href="/login">เข้าสู่ระบบ</a></li>
-
+                          
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ $username }} <span class="caret"></span>
+                                    {{ Auth::User()->email }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -105,7 +105,7 @@
                                       </a>
 
                                       <form id="profile" action="/profile" method="get" style="display: none;">
-                                          <input type='hidden' name='username' value="{{$username}}">
+
                                           {{ csrf_field() }}
                                       </form>
                                   </li>
@@ -117,7 +117,7 @@
                                       </a>
 
                                       <form id="voucher" action="/voucher" method="get" style="display: none;">
-                                          <input type='hidden' name='username' value="{{$username}}">
+
                                           {{ csrf_field() }}
                                       </form>
                                   </li>
@@ -129,22 +129,21 @@
                                       </a>
 
                                       <form id="reserve" action="/reserveindex" method="get" style="display: none;">
-                                          <input type='hidden' name='username' value="{{$username}}">
+
                                           {{ csrf_field() }}
                                       </form>
                                   </li>
                                   <!-- logout -->
                                     <li>
-                                        <a href="/"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            ออกจากระบบ
-                                        </a>
+                                      <a href="{{ route('logout') }}"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                          ออกจากระบบ
+                                      </a>
 
-                                        <form id="logout-form" action="/" method="get" style="display: none;">
-
-                                            {{ csrf_field() }}
-                                        </form>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                          {{ csrf_field() }}
+                                      </form>
                                     </li>
                                 </ul>
                             </li>

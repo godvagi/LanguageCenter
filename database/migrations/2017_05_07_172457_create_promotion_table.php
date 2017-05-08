@@ -13,12 +13,22 @@ class CreatePromotionTable extends Migration
      */
     public function up()
     {
-      Schema::create('promotion', function (Blueprint $table) {
-
-      $table->integer('pro_id')->primary();
-      $table->string('name');
-      $table->integer('point');
-      $table->timestamps();
+      Schema::create('promotions', function (Blueprint $table) {
+        $table->increments('id');
+        $table->integer('pro_id');
+        $table->string('name');
+        $table->string('startdate');
+        $table->string('expdate');
+        $table->string('img');
+        $table->integer('point');
+        $table->boolean('active')->default(1);
+        $table->string('descriptive');
+        $table->timestamps();
+      // $table->integer('pro_id')->primary();
+      // $table->string('name');
+      // $table->string('path');
+      // $table->integer('point');
+      // $table->timestamps();
         });
     }
 
@@ -29,6 +39,6 @@ class CreatePromotionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('promotion');
+        Schema::dropIfExists('promotions');
     }
 }

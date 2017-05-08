@@ -30,13 +30,26 @@ class loginController extends BaseController
                         ->where('status','=',$r->input('email'))
                         ->get();
       $username =  $r->input('email');
+      $promo = DB::table('promotion')
+                  ->select('pro_id','name','point','active','img','startdate','expdate')
+                  ->get();
       return view('index',[
         'username' => $username,
         'show' => $show,
         'date' => '',
         'time' => '',
-        'data' => $obj
+        'data' => $obj,
+        'pro' => $promo
       ]);
+      }
+      else{
+        echo '<script language="javascript">';
+        echo 'alert("wrong email or password")';
+        echo '</script>';
+        return view('log',[
+        'username' => $r->input('username')
+        ]);
+
       }
     }
   }

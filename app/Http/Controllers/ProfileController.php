@@ -2,100 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-class ProfileController extends Controller
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+class profileController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $r)
-    {
-       // $username = $r->input('username');
-       // $username = DB::table('users')->get();
-       //      return view('profile',['username' =>$username
-       //  ]);
-           $username = $r->input('username');
-           $data = DB::table('users')
-                     ->select('name','email','point')
-                     ->where('email','=',$username)
-                     ->get();
-            return view('profile',['data' =>$data,'username' =>$username]);
-                // ->select('name','email','point')
-                // ->where('email','=',$username)
-                // ->get();
-
-
-       // return view('profile',['data' => $users,'username' => $users
-       //  ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  public function index(Request $r){
+       $username = Auth::user()->email;
+      $user = DB::table('users')
+                  ->where('email','=',$username)
+                  ->get();
+      $sec = DB::table('sections')
+                  ->where('email','=',$username)
+                  ->get();
+      return view('profile',[
+         'username'=>$username,
+        'user'=>$user,
+        'sec' =>$sec
+      ]);
+  }
+  public function changePass(Request $r){
+    if($r->input('newpass') == $r->input('confirm') && $r->input('oldpass') == $r->input('pass')){
+      $update =  DB::table('users')
+                  ->where('email','=',$r->input('username'))
+                  ->where('password','=',$r->input('oldpass'))
+                  ->update([
+                    'password' => $r->input('newpass'),
+                  ]);
+      $username = $r->input('username');
+      $user = DB::table('users')
+                  ->where('email','=',$username)
+                  ->get();
+      $sec = DB::table('sections')
+                  ->where('email','=',$username)
+                  ->get();
+      return view('profile',[
+        'username'=>$username,
+        'user'=>$user,
+        'sec' =>$sec
+      ]);
+  }else{
+    echo $r->input('pass')." ";
+    echo $r->input('oldpass')." ";
+    echo $r->input('newpass')." ";
+    echo $r->input('confirm')." ";
+  }
+}
 }

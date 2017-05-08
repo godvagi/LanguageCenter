@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +21,7 @@
     <link href="css/prettyPhoto.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
+      <link href="css/form-profile.css" rel="stylesheet">
 
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <!--         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -34,69 +40,110 @@
 @extends('layouts._navbar')
 
  @section('content1')
-    @foreach($data as $d)
-   <label>Firstname : {{$d->name}}</label><br>
-   <label>Lastname : </label><br>
-    <label>E-mail: {{$d->email}}</label><br>
-   <label>Point : {{$d->point}}</label><br>
-    @endforeach
 
 
    <br><br>
       <section id="content">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-8 wow fadeInDown">
+                <div class="col-xs-12 col-sm-8 wow fadeInDown" id="show">
                    <div class="tab-wrap">
                         <div class="media">
                             <div class="parrent pull-left">
                                 <ul class="nav nav-tabs nav-stacked">
-                                    <li class=""><a href="#tab1" data-toggle="tab" class="analistic-01">Responsive Web Design</a></li>
-                                    <li class="active"><a href="#tab2" data-toggle="tab" class="analistic-02">Premium Plugin Included</a></li>
-                                    <li class=""><a href="#tab3" data-toggle="tab" class="tehnical">Predefine Layout</a></li>
-                                    <li class=""><a href="#tab4" data-toggle="tab" class="tehnical">Our Philosopy</a></li>
-                                    <li class=""><a href="#tab5" data-toggle="tab" class="tehnical">What We Do?</a></li>
+                                    <li class="active"><a href="#tab1" data-toggle="tab" class="analistic-01">ประวัติส่วนตัว</a></li>
+                                    <li class=""><a href="#tab2" data-toggle="tab" class="analistic-02">เปลี่ยนรหัสผ่าน</a></li>
+                                    <li class=""><a href="#tab3" data-toggle="tab" class="tehnical">ข้อมูลการลงทะเยีนเรียน</a></li>
+
                                 </ul>
                             </div>
 
                             <div class="parrent media-body">
                                 <div class="tab-content">
-                                    <div class="tab-pane fade" id="tab1">
+                                    <div class="tab-pane fade active in" id="tab1">
                                         <div class="media">
                                            <div class="pull-left">
-                                                <img class="img-responsive" src="images/tab2.png">
-                                            </div>
+                                                </div>
                                             <div class="media-body">
-                                                 <h2>Adipisicing elit</h2>
-                                                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use.</p>
+                                              @foreach($user as $d)
+                                          <label id="label">Firstname : {{$d->name}}</label><br>
+                                          <label  id="label">role : {{$d->role}}</label><br>
+                                           <label  id="label">E-mail: {{$d->email}}</label><br>
+                                          <label  id="label">Point : {{$d->point}}</label><br>
+                                           @endforeach
                                             </div>
                                         </div>
                                     </div>
 
-                                     <div class="tab-pane fade active in" id="tab2">
+                                     <div class="tab-pane fade" id="tab2">
                                         <div class="media">
                                            <div class="pull-left">
-                                                <img class="img-responsive" src="images/tab1.png">
+
                                             </div>
                                             <div class="media-body">
-                                                 <h2>Adipisicing elit</h2>
-                                                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use.
-                                                 </p>
+                                              <form action="/changepass" method="post">
+                                                <input type='hidden' name='_token' value="{{ csrf_token() }}">
+                                                <input type='hidden' name='username' value="{{$username}}">
+                                                @foreach($user as $u)
+                                                <input type='hidden' name='pass' value="{{$u->password}}">
+                                                @endforeach
+                                                 <label id="label">รหัสผ่านเก่า</label><input type="password" name="oldpass"><br>
+                                                 <label id="label">รหัสผ่านใหม่</label><input type="password" name="newpass"><br>
+                                                 <label id="label">ยืนยันรหัสผ่านใหม่</label><input type="password" name="confirm"><br>
+                                                 <button type='submit' class="btn btn-primary">ยืนยัน</button>
+                                                </form>
                                             </div>
                                         </div>
                                      </div>
 
                                      <div class="tab-pane fade" id="tab3">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                                        <!-- table --><main>
+
+                                         <?php $count=1; ?>
+                                         <div class="container" >
+
+                                           <div class="row" id="label">
+                                             <table class='table table-condensed'>
+                                               <tr>
+                                                 <td>
+                                                   ลำดับ
+                                                 </td>
+                                                 <td>
+                                                   รหัสวิชา
+                                                 </td>
+                                                 <td>
+                                                   เวลาที่ใช้
+                                                 </td>
+                                                 <td>
+                                                   เวลที่เหลือ
+                                                 </td>
+                                               </tr>
+                                               @foreach($sec as $key)
+                                               <tr>
+                                                 <td>
+                                                   {{$count}}
+                                                 </td>
+                                                 <td>
+                                                   {{$key->sub_id}}
+                                                 </td>
+                                                 <td>
+                                                   {{$key->time_use}}
+                                                 </td>
+                                                 <td>
+                                                   {{$key->time_left}}
+                                                 </td>
+                                                 <?php $count+=1; ?>
+                                               </tr>
+                                                 @endforeach
+                                             </table>
+
+                                           </div>
+
+                                         </div>
+                                       </main>
                                      </div>
 
-                                     <div class="tab-pane fade" id="tab4">
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words</p>
-                                     </div>
 
-                                     <div class="tab-pane fade" id="tab5">
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures,</p>
-                                     </div>
                                 </div> <!--/.tab-content-->
                             </div> <!--/.media-body-->
                         </div> <!--/.media-->
