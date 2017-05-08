@@ -11,21 +11,33 @@
 |
 */
 
-Route::get('/', function () {
-<<<<<<< HEAD
-    return view('admin.index');
-});
-Route::get('/about-us', function () {
-    return view('admin.about-us');
-});
-Route::get('/login', function () {
-    return view('admin.login');
-});
+
 Route::get('/subject', function () {
     return view('subject');
 });
-//Route::resource('admin/data','Admin\DataController');
-=======
+Route::get('/', function () {
     return view('index');
 });
->>>>>>> develop
+//Route::resource('admin/data','Admin\DataController');
+
+Auth::routes();
+Route::get('/home', 'HomeController@admin');
+//Route::get('admin/promotions', 'PromotionsController@index');
+//Route::get('admin/students', 'StudentsController@index');
+//Route::get('admin/courses', 'CoursesController@index');
+
+
+Route::group(['middleware' => 'auth'],function(){
+    Route::get('/admin',function(){
+      return view('admin.index');
+    })->name('admin');
+    Route::get('admin/promotions', 'PromotionsController@index')->name('admin');
+	Route::get('admin/courses', 'CoursesController@index')->name('admin');
+	Route::get('admin/students', 'StudentsController@index')->name('admin');
+    Route::get('/student',function(){
+      return view('student.index');
+    })->name('student');
+});
+
+
+

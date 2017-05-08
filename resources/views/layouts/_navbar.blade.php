@@ -1,5 +1,4 @@
-
-    <header id="header">
+<header id="header">
         <div class="top-bar">
             <div class="container">
                 <div class="row">
@@ -41,21 +40,12 @@
 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="about-us.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="blog-item.html">Blog Single</a></li>
-                                <li><a href="pricing.html">Pricing</a></li>
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="shortcodes.html">Shortcodes</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact-us.html">Contact</a></li>
+                        <li id='navindex'><a href="{{url('/')}}">หน้าแรก</a></li>
+                        <li><a href="{{url('/about-us')}}">เกี่ยวกับเรา</a></li>
+                        <li><a href="services.html">คอร์ส</a></li>
+                        <li><a href="contact-us.html">ติดต่อเรา</a></li>
+                        <li id='navlogin'><a href="{{url('/login')}}">login</a></li>
+
                     </ul>
                 </div>
             </div><!--/.container-->

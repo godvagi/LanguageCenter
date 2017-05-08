@@ -11,6 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        App\Promotion::create([
+          'name' => 'Adele',
+          'startdate' => '26/50/50',
+          'expdate' => '26/50/50',
+          'img' => 'test.png',
+          'type' => 'percent',
+          'total' => '20',
+          'description' => 'grammar',
+      ]);
+    
     }
 }
