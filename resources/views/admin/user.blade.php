@@ -44,37 +44,39 @@
     -->
 
     	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
-                </a>
-            </div>
+					<div class="logo">
+							<a href="{{ url('/admin') }}" class="simple-text">
+									Admin
+								</a>
+					</div>
 
             <ul class="nav">
-                <li >
-                    <a href="{{ url('/admin') }}">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/admin/promotions') }}">
-                        <i class="pe-7s-user"></i>
-                        <p>Promotions</p>
-                    </a>
-                </li>
-								<li class="active">
-										<a href="{{ url('/admin/users') }}">
-												<i class="pe-7s-note2"></i>
-												<p>users</p>
-										</a>
-								</li>
-								<li >
-										<a href="{{ url('/admin/subjects') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>subjects</p>
-										</a>
-								</li>
+							<!-- <li >
+									<a href="{{ url('/admin') }}">
+											<i class="pe-7s-graph"></i>
+											<p>Dashboard</p>
+									</a>
+							</li> -->
+							<li class="active">
+									<a href="{{ url('/admin/users') }}">
+											<!-- <i class="pe-7s-note2"></i> -->
+											<i class="pe-7s-add-user"></i>
+											<p>users</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/promotions') }}">
+											<!-- <i class="pe-7s-user"></i> -->
+											<i class="pe-7s-gift"></i>
+											<p>Promotions</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/subjects') }}">
+											<i class="pe-7s-news-paper"></i>
+											<p>subjects</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -119,7 +121,12 @@
 
 
                     <ul class="nav navbar-nav navbar-right">
+											<li>
+												<a href="">
+														<p>{{ Auth::user()->email }}</p>
+												 </a>
 
+											</li>
 
                         <li>
 													<a href="{{ route('logout') }}"
@@ -146,7 +153,7 @@
                     <div class="col-md-6">
                         <div class="card">
 													<div class="header">
-															<h4 class="title">Create Students</h4>
+															<h4 class="title">Create Users</h4>
 															<p class="category"></p>
 													</div>
 													<div class="content">
@@ -333,26 +340,7 @@
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
+
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
@@ -418,6 +406,7 @@
  							type: 'POST',
  							success: function(data){
  								alert(data.data);
+								document.getElementById("addCourse").reset();
  							}
  						});
 

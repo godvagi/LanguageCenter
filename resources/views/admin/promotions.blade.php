@@ -49,36 +49,33 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
+                <a href="{{ url('/admin') }}" class="simple-text">
+                    Admin
                 </a>
             </div>
 
             <ul class="nav">
-                <li >
-                    <a href="{{ url('/admin') }}">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="{{ url('/admin/promotions') }}">
-                        <i class="pe-7s-user"></i>
-                        <p>Promotions</p>
-                    </a>
-                </li>
-								<li>
-										<a href="{{ url('/admin/users') }}">
-												<i class="pe-7s-note2"></i>
-												<p>users</p>
-										</a>
-								</li>
-								<li >
-										<a href="{{ url('/admin/subjects') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>subjects</p>
-										</a>
-								</li>
+
+							<li >
+									<a href="{{ url('/admin/users') }}">
+											<!-- <i class="pe-7s-note2"></i> -->
+											<i class="pe-7s-add-user"></i>
+											<p>users</p>
+									</a>
+							</li>
+							<li class="active">
+									<a href="{{ url('/admin/promotions') }}">
+											<!-- <i class="pe-7s-user"></i> -->
+											<i class="pe-7s-gift"></i>
+											<p>Promotions</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/subjects') }}">
+											<i class="pe-7s-news-paper"></i>
+											<p>subjects</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -155,9 +152,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li>
-                           <a href="">
-                               <p>Account</p>
-                            </a>
+
                         </li>
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -176,6 +171,12 @@
                                 <li><a href="#">Separated link</a></li>
                               </ul>
                         </li> -->
+												<li>
+													<a href="">
+															<p>{{ Auth::user()->email }}</p>
+													 </a>
+
+												</li>
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -219,6 +220,7 @@
 																<th>description</th>
 																<th>Image</th>
 																<th>Action</th>
+																<!-- <th>Time</th> -->
 														</tr>
 													</thead>
 													<tbody>
@@ -229,7 +231,6 @@
 																<td>@{{ d.startdate }}</td>
 																<td>@{{ d.expdate }}</td>
 																<td>@{{ d.point }}</td>
-																<!-- <td>@{{ d.active }}</td> -->
 																<td>
 																	<form @submit.prevent = "updateActive(d.id)" method="post" :id="'del'+d.id" >
 																		<input type="hidden" name="id" :value="d.id" required>
@@ -251,6 +252,7 @@
 										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
 										        		  </form>
 																</td>
+																<!-- <td>@{{ d.created_at }}<td> -->
 														</tr>
 													</tbody>
 													</table>
@@ -263,38 +265,13 @@
 
  									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Promotion</button>
 
-
-
-
-
-
-
 							</div>
 					</div>
 					<footer class="footer">
 							<div class="container-fluid">
 									<nav class="pull-left">
 											<ul>
-													<li>
-															<a href="#">
-																	Home
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Company
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Portfolio
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																 Blog
-															</a>
-													</li>
+
 											</ul>
 									</nav>
 									<p class="copyright pull-right">
@@ -417,7 +394,7 @@
 												<br>
 		                </div>
 
-		                <input name="image" id="image" type="file" class="form-control" @change="onFileChange">
+		                <input name="image" id="image" type="file" accept="image/*" class="form-control" @change="onFileChange">
 		            </div>
 								<div class="form-group">
 												<label for="active">Active</label>
@@ -516,7 +493,6 @@
 				mounted: function(){
 					this.getPromotions();
 				},
-
 				methods:{
 					getPromotions: function(){
 						axios.get('/api/promotions', {
@@ -525,13 +501,13 @@
 								if(response.data.success) {
 									vm.data = response.data.data;
 									vmmodal.data = response.data.data;
+									response.data.data.forEach(function(product) {
+    								console.log(product['created_at']);
+									});
 								}
-
             }).catch(function (error) {
-
                 alert('Error (see console log)');
                 console.log(error);
-
             });
 					},
 					deletePromotion :function(id){
@@ -617,6 +593,7 @@
               success: function(data){
 								vm.getPromotions();
                 alert(data.data);
+								document.getElementById("addForm").reset();
               }
             });
 					}

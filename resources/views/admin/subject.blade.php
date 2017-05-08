@@ -48,37 +48,39 @@
     -->
 
     	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
-                </a>
-            </div>
+				<div class="logo">
+						<a href="{{ url('/admin') }}" class="simple-text">
+								Admin
+						</a>
+				</div>
 
             <ul class="nav">
-                <li >
-                    <a href="{{ url('/admin') }}">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li >
-                    <a href="{{ url('/admin/promotions') }}">
-                        <i class="pe-7s-user"></i>
-                        <p>Promotions</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/admin/users') }}">
-                        <i class="pe-7s-note2"></i>
-                        <p>users</p>
-                    </a>
-                </li>
-								<li class="active">
-										<a href="{{ url('/admin/subjects') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>subjects</p>
-										</a>
-								</li>
+							<!-- <li >
+									<a href="{{ url('/admin') }}">
+											<i class="pe-7s-graph"></i>
+											<p>Dashboard</p>
+									</a>
+							</li> -->
+							<li >
+									<a href="{{ url('/admin/users') }}">
+											<!-- <i class="pe-7s-note2"></i> -->
+											<i class="pe-7s-add-user"></i>
+											<p>users</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/promotions') }}">
+											<!-- <i class="pe-7s-user"></i> -->
+											<i class="pe-7s-gift"></i>
+											<p>Promotions</p>
+									</a>
+							</li>
+							<li class="active">
+									<a href="{{ url('/admin/subjects') }}">
+											<i class="pe-7s-news-paper"></i>
+											<p>subjects</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -117,7 +119,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Subject</a>
+                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Subjects</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <!-- <ul class="nav navbar-nav navbar-left">
@@ -176,6 +178,12 @@
                                 <li><a href="#">Separated link</a></li>
                               </ul>
                         </li> -->
+												<li>
+													<a href="">
+															<p>{{ Auth::user()->email }}</p>
+													 </a>
+
+												</li>
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -201,7 +209,7 @@
 
 										<div class="card">
 													<div class="header">
-															<h4 class="title">All Promotions</h4>
+															<h4 class="title">All Subjects</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
 													<div class="content table-responsive table-full-width" id="vue-app">
@@ -259,26 +267,7 @@
 							<div class="container-fluid">
 									<nav class="pull-left">
 											<ul>
-													<li>
-															<a href="#">
-																	Home
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Company
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Portfolio
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																 Blog
-															</a>
-													</li>
+
 											</ul>
 									</nav>
 									<p class="copyright pull-right">
@@ -538,6 +527,7 @@
               success: function(data){
 								vm.getPromotions();
                 alert(data.data);
+								document.getElementById("addForm").reset();
               }
             });
 					}
