@@ -54,7 +54,8 @@
 
                         <!-- คอร์ส -->
                         <li><a href="/course"
-                            >
+                            onclick="event.preventDefault();
+                                     document.getElementById('course').submit();">
                           คอร์สเรียน
                         </a>
                         <form id="course" action="/course" method="get" style="display: none;">
@@ -65,11 +66,11 @@
                         <!-- ดาวน์โหลด -->
                         <li><a href="/getPDF"
                             onclick="event.preventDefault();
-                                     document.getElementById('download').submit();">
+                                     document.getElementById('load').submit();">
                           ดาวน์โหลดฟอร์ม
                         </a>
-                        <form id="download" action="/getPDF" method="get" style="display: none;">
-
+                        <form id="load" action="/getPDF" method="get" style="display: none;">
+                            <input type='hidden' name='username' value="{{$username}}">
                             {{ csrf_field() }}
                         </form></li>
 
@@ -104,6 +105,18 @@
                                       </a>
 
                                       <form id="profile" action="/profile" method="get" style="display: none;">
+                                          <input type='hidden' name='username' value="{{$username}}">
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
+                                  <li>
+                                      <a href="/voucher"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('voucher').submit();">
+                                        แลกVoucher
+                                      </a>
+
+                                      <form id="voucher" action="/voucher" method="get" style="display: none;">
                                           <input type='hidden' name='username' value="{{$username}}">
                                           {{ csrf_field() }}
                                       </form>

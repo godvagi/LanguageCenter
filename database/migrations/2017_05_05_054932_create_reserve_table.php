@@ -16,12 +16,13 @@ class CreateReserveTable extends Migration
       Schema::create('reserve', function (Blueprint $table) {
       $table->increments('i');
       $table->integer('id');
-      $table->string('date');
-      $table->string('time');
-      $table->string('status');
-      $table->timestamp('updated_at');
-      $table->timestamp('create_at');
-      $table->primary(['id','date','time']);
+      $table->string('date')->nullable();
+      $table->string('time')->nullable();
+      $table->string('status')->nullable();
+      $table->integer('sub_id')->nullable();
+      $table->timestamps();
+
+
         });
     }
 

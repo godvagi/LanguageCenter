@@ -47,6 +47,14 @@
 
          <form action="/reserve" method="get">
            <input type='hidden' name='_token' value="{{ csrf_token() }}">
+           <label class="mr-sm-2" id="label" for="inlineFormCustomSelect" >วิชา</label>&nbsp&nbsp&nbsp
+           <span class="dropdown">
+           <select class="btn btn-default dropdown-toggle"  name="sub_id" id="sub_id" data-toggle="dropdown">วิชา
+           <span class="caret"></span>
+            @foreach($sec as $s)
+            <option selected>{{$s->sub_id}}</option>
+            @endforeach
+          </select>
            <label class="mr-sm-2"  id="label" for="inlineFormCustomSelect">วันที่</label>&nbsp&nbsp&nbsp
        <input class="btn btn-default dropdown-toggle" type="date" name="date">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
        <label class="mr-sm-2" id="label" for="inlineFormCustomSelect" >เวลา</label>&nbsp&nbsp&nbsp
@@ -88,11 +96,17 @@
   <input type='hidden' name='username' value="{{$username}}">
   <input type='hidden' name='date' value="{{$date}}">
   <input type='hidden' name='time' value="{{$time}}">
-
+  <input type='hidden' name='sub_id' value="{{$sub}}">
+  @foreach($sec as $s)
+  @if($sub == $s->sub_id)
+  <input type='hidden' name='time_use' value="{{$s->time_use}}">
+  <input type='hidden' name='time_left' value="{{$s->time_left}}">
+  @endif
+  @endforeach
          @foreach($num as $k)
            @if(count($data)>($count))
            @if( $data[$count]->status != '' && $data[$count]->id == $k )
-            <div class="contains" style="display: none;">
+          
          <?php $count+=1; ?>
          <button class="btn btn-danger btn-lg" type="submit"  name='id' id="id" value="{{$k}}" disabled> {{$k}}
            @else
@@ -110,12 +124,22 @@
 </center>
 
 <main>
-  <div class="container">
+  <?php $total=0; ?>
+  @foreach($sec as $t)
+  @if($sub == $t->sub_id)
+  <?php  $total += $t->time_left ;?>
+  @endif
+  @endforeach
+  <div class="container" id="label">
+    <label id="table_time">Time left : {{$total}}</label>
     <div class="row">
       <table class='table table-condensed'>
         <tr>
           <td>
             ID
+          </td>
+          <td>
+            Subject
           </td>
           <td>
             Date
@@ -134,6 +158,9 @@
             {{$key->id}}
           </td>
           <td>
+            {{$key->sub_id}}
+          </td>
+          <td>
             {{$key->date}}
           </td>
           <td>
@@ -146,6 +173,13 @@
                 <input type='hidden' name='username' value="{{$username}}">
                 <input type='hidden' name='date' value="{{$date}}">
                 <input type='hidden' name='time' value="{{$time}}">
+                <input type='hidden' name='sub_id' value="{{$key->sub_id}}">
+                @foreach($sec as $s)
+                @if($sub == $s->sub_id)
+                <input type='hidden' name='time_use' value="{{$s->time_use}}">
+                <input type='hidden' name='time_left' value="{{$s->time_left}}">
+                @endif
+                @endforeach
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>

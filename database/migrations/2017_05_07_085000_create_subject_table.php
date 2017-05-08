@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionTable extends Migration
+class CreateSubjectTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateSectionTable extends Migration
      */
     public function up()
     {
-      Schema::create('section', function (Blueprint $table) {
-      $table->increments('id');
-      $table->integer('sub_id');
-      $table->string('email');
-      $table->integer('time_use');
-      $table->integer('time_left');
-      $table->timestamps();
+      Schema::create('subject', function (Blueprint $table) {
+
+      $table->integer('sub_id')->primary();
+      $table->string('name');
+      $table->string('tech_name');
+      $table->integer('price');
+      $table->integer('hour');
+      $table->integer('point');
+
         });
     }
 
@@ -30,6 +32,6 @@ class CreateSectionTable extends Migration
      */
     public function down()
     {
-          Schema::dropIfExists('section');
+        Schema::dropIfExists('subject');
     }
 }
