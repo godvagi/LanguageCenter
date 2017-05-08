@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>About Us | Corlate</title>
+    <title>About Us</title>
 
 	<!-- core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -19,11 +19,7 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    
 </head><!--/head-->
 
 <body>
@@ -33,8 +29,7 @@
     <section id="about-us">
         <div class="container">
 			<div class="center wow fadeInDown">
-				<h2>About Corlate</h2>
-				<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+				<h2>เกี่ยวกับเรา Easy Language</h2>
 			</div>
 
 			<!-- about us slider -->
