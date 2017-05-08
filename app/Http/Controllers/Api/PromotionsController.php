@@ -111,6 +111,11 @@ class PromotionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $promotion = \App\Promotion::find($id)->delete();
+
+      return [
+          'success' => true,
+          'data' => "Delete success!"
+        ];
     }
 }

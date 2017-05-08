@@ -206,31 +206,42 @@
 													</div>
 													<div class="content table-responsive table-full-width" id="vue-app">
 
-
-
 													<table class="table table-hover table-striped">
 													<thead>
 														<tr>
 																<th>ID</th>
 																<th>Name</th>
-																<th>Image</th>
 																<th>startdate</th>
 																<th>expdate</th>
 																<th>type</th>
 																<th>total</th>
 																<th>description</th>
+																<th>Image</th>
+																<th>Action</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr v-for="d in data">
 																<td>@{{ d.id }}</td>
 																<td>@{{ d.name }}</td>
-																<td>@{{ d.img }}</td>
 																<td>@{{ d.startdate }}</td>
 																<td>@{{ d.expdate }}</td>
 																<td>@{{ d.type }}</td>
 																<td>@{{ d.total }}</td>
 																<td>@{{ d.description }}</td>
+																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="'/images/promotions/' + d.img"  height="60" width="70"></td>
+																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
+																<td>
+																	<form @submit.prevent = "deletePromotion(d.id)" method="post" :id="'del'+d.id" >
+																		<input type="hidden" name="id" :value="d.id" required>
+										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
+										        		 </form>
+
+
+
+
+
+																</td>
 														</tr>
 													</tbody>
 													</table>
@@ -241,7 +252,7 @@
 										</div>
 									</div>
 
- 									<button type="button" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add promotions</button>
+ 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Promotion</button>
 
 
 
@@ -285,7 +296,7 @@
         </div>
     </div>
 		  <div class="modal fade" id="addPromo" role="dialog">
-		    <div class="modal-dialog">
+		    <div class="modal-dialog modal-lg">
 		      <!-- Modal content-->
 		      <div class="modal-content">
 						<div id="vue-add-promotion">
@@ -382,12 +393,16 @@
 								</div> -->
 								<div class="form-group">
 		                <div v-if="!image">
-		                    <h2>Select an image</h2>
+
+												<label for="image">Select an image</label>
 		                    </div>
 		                <div v-else>
-		                    <img :src="image" />
-		                    <button @click="removeImage">Remove image</button>
+		                    <img :src="image" width="500" height="300"/>
+		                    <!-- <button @click="removeImage">Remove image</button> -->
+												<br>
+												<br>
 		                </div>
+
 		                <input name="image" id="image" type="file" class="form-control" @change="onFileChange">
 		            </div>
 								<div class="form-group">
@@ -433,10 +448,28 @@
 		  </div>
 
 
-
-
-
-
+			<div id="vue-modal">
+			<div v-for="d in data">
+				@{{d.id}}
+			<div class="modal fade" :id="'modal'+d.id" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">@{{ d.name }}</h4>
+						</div>
+						<div class="modal-body">
+							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
+						</div>
+						<div class="modal-footer">
+		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
+		        </div>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
 </body>
 
     <!--   Core JS Files   -->
@@ -471,15 +504,19 @@
         data:{
 					'data':[]
 				},
+				mounted: function(){
+					this.getPromotions();
+				},
 
 				methods:{
 					getPromotions: function(){
 						axios.get('http://languagecenter.dev/api/promotions', {
-
-
             }).then(function (response) {
                 console.log(response.data.data);
-								if(response.data.success) vm.data = response.data.data;
+								if(response.data.success) {
+									vm.data = response.data.data;
+									vmmodal.data = response.data.data;
+								}
 
             }).catch(function (error) {
 
@@ -487,8 +524,32 @@
                 console.log(error);
 
             });
+					},
+					deletePromotion :function(id){
+							console.log(id);
+							jQuery.ajax({
+						 		url: '/api/promotions/'+id,
+						 		cache: false,
+						 		contentType: false,
+						 		processData: false,
+						 		type: 'DELETE',
+						 		success: function(data){
+							 		vm.getPromotions();
+									alert(data.data);
+						 }
+					 });
 					}
 
+				}
+    });
+
+		var vmmodal = new Vue({
+        el: '#vue-modal',
+        data:{
+					'data':[]
+				},
+				mounted: function(){
+					vm.getPromotions();
 				}
     });
 
@@ -533,10 +594,10 @@
               type: 'POST',
               success: function(data){
 								vm.getPromotions();
-                alert(data);
+                alert(data.data);
               }
             });
-           }
+					}
     }
 });
 
