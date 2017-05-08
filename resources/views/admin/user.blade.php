@@ -395,6 +395,24 @@
  							}
  						});
 
+        },
+				submitAddUser: function () {
+						// alert('halo');
+					var form = document.querySelector('#addUser');
+ 					 var formdata = new FormData(form);
+ 					//  console.log(formdata);
+ 					 jQuery.ajax({
+ 							url: '/register',
+ 							data: formdata,
+ 							cache: false,
+ 							contentType: false,
+ 							processData: false,
+ 							type: 'POST',
+ 							success: function(data){
+ 								alert(data.data);
+ 							}
+ 						});
+
         }
 
     }
