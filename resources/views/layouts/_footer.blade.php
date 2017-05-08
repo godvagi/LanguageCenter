@@ -1,4 +1,10 @@
-<footer id="footer" class="midnight-blue">
+
+<style media="screen">
+.footer {
+
+}
+</style>
+<footer id="footer" class="midnight-blue ">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
