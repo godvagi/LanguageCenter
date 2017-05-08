@@ -29,10 +29,10 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/admin',function(){
       return view('admin.index');
     })->name('admin');
-    Route::get('admin/students', 'StudentsController@index')->name('admin');
-    Route::get('admin/courses', 'CoursesController@index');
+    Route::get('admin/users', 'AdminUsersController@index')->name('admin');
+    Route::get('admin/subjects', 'AdminSubjectsController@index')->name('admin');
 
-    Route::get('admin/promotions', 'PromotionsController@index')->name('admin');
+    Route::get('admin/promotions', 'AdminPromotionsController@index')->name('admin');
     Route::get('/student',function(){
       return view('student.index');
     })->name('student');

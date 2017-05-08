@@ -68,13 +68,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/admin/students') }}">
+                    <a href="{{ url('/admin/users') }}">
                         <i class="pe-7s-note2"></i>
                         <p>Students</p>
                     </a>
                 </li>
 								<li>
-										<a href="{{ url('/admin/courses') }}">
+										<a href="{{ url('/admin/subjects') }}">
 												<i class="pe-7s-news-paper"></i>
 												<p>Courses</p>
 										</a>
@@ -120,7 +120,7 @@
                     <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Promotions</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
+                    <!-- <ul class="nav navbar-nav navbar-left">
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-dashboard"></i>
@@ -151,10 +151,10 @@
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <!-- <li>
                            <a href="">
                                <p>Account</p>
                             </a>
@@ -175,7 +175,7 @@
                                 <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>
                               </ul>
-                        </li>
+                        </li> -->
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -210,11 +210,12 @@
 													<thead>
 														<tr>
 																<th>ID</th>
+															 <th>promotion ID</th>
 																<th>Name</th>
 																<th>startdate</th>
 																<th>expdate</th>
-																<th>type</th>
-																<th>total</th>
+																<th>point</th>
+																<th>active</th>
 																<th>description</th>
 																<th>Image</th>
 																<th>Action</th>
@@ -223,11 +224,24 @@
 													<tbody>
 														<tr v-for="d in data">
 																<td>@{{ d.id }}</td>
+																<td>@{{ d.pro_id }}</td>
 																<td>@{{ d.name }}</td>
 																<td>@{{ d.startdate }}</td>
 																<td>@{{ d.expdate }}</td>
-																<td>@{{ d.type }}</td>
-																<td>@{{ d.total }}</td>
+																<td>@{{ d.point }}</td>
+																<!-- <td>@{{ d.active }}</td> -->
+																<td>
+																	<form @submit.prevent = "updateActive(d.id)" method="post" :id="'del'+d.id" >
+																		<input type="hidden" name="id" :value="d.id" required>
+										            		<!-- <button class="btn btn-danger btn-fill" type="submit"  >1</button> -->
+																		<div v-if="d.active">
+																				<button class="btn btn-success btn-fill" type="submit"  >True</button>
+										                 </div>
+										                <div v-else>
+										                    <button class="btn btn-danger btn-fill" type="submit"  >False</button>
+										                </div>
+										        		  </form>
+																</td>
 																<td>@{{ d.description }}</td>
 																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="'/images/promotions/' + d.img"  height="60" width="70"></td>
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
@@ -235,12 +249,7 @@
 																	<form @submit.prevent = "deletePromotion(d.id)" method="post" :id="'del'+d.id" >
 																		<input type="hidden" name="id" :value="d.id" required>
 										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
-										        		 </form>
-
-
-
-
-
+										        		  </form>
 																</td>
 														</tr>
 													</tbody>
@@ -387,6 +396,11 @@
 												<label for="name">Promotion Name</label>
 												<input type="text" class="form-control" name="name"  id="name" placeholder="" required>
 								</div>
+								<div class="form-group">
+												<label for="name">Promotion ID</label>
+												<input type="text" class="form-control" name="pro_id"  id="pro_id" placeholder="" required>
+								</div>
+
 								<!-- <div class="form-group">
 												<label for="img">Image</label>
 												<input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
@@ -406,6 +420,14 @@
 		                <input name="image" id="image" type="file" class="form-control" @change="onFileChange">
 		            </div>
 								<div class="form-group">
+												<label for="active">Active</label>
+												<select  class="form-control" name="active"  id="active" required>
+														 <option value="" disabled selected>Please select active</option>
+														 <option value='1' >Yes</option>
+														 <option value='0' >No</option>
+													 </select>
+								</div>
+								<div class="form-group">
 												<label for="startdate">Start Date</label>
 												<input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
 								</div>
@@ -414,17 +436,8 @@
 												<input type="date" class="form-control" name="expdate" id="expdate"  placeholder="" required>
 								</div>
 								<div class="form-group">
-												<label for="type">Discount Type</label>
-												<select  class="form-control" name="type"  id="type" required>
-														 <option value="" disabled selected>Please select type</option>
-														 <option value="percent" >Percent</option>
-														 <option value="baht" >Baht</option>
-													 </select>
-								</div>
-
-								<div class="form-group">
-												<label for="total">Discount Rate</label>
-												<input type="text" class="form-control" name="total" id="total" placeholder="" required>
+												<label for="total">Point</label>
+												<input type="text" class="form-control" name="point" id="point" placeholder="" required>
 								</div>
 								<div class="form-group">
 												<label for="descript">Description</label>
@@ -450,7 +463,6 @@
 
 			<div id="vue-modal">
 			<div v-for="d in data">
-				@{{d.id}}
 			<div class="modal fade" :id="'modal'+d.id" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<!-- Modal content-->
@@ -496,9 +508,6 @@
 	<script src="/js/app.js" charset="utf-8"></script>
 
 <script>
-
-
-
 		var vm = new Vue({
         el: '#vue-app',
         data:{
@@ -510,9 +519,9 @@
 
 				methods:{
 					getPromotions: function(){
-						axios.get('http://languagecenter.dev/api/promotions', {
+						axios.get('/api/promotions', {
             }).then(function (response) {
-                console.log(response.data.data);
+                // console.log(response.data.data);
 								if(response.data.success) {
 									vm.data = response.data.data;
 									vmmodal.data = response.data.data;
@@ -526,7 +535,7 @@
             });
 					},
 					deletePromotion :function(id){
-							console.log(id);
+							// console.log(id);
 							jQuery.ajax({
 						 		url: '/api/promotions/'+id,
 						 		cache: false,
@@ -536,6 +545,19 @@
 						 		success: function(data){
 							 		vm.getPromotions();
 									alert(data.data);
+						 }
+					 });
+					},
+					updateActive :function(id){
+							// console.log(id);
+							jQuery.ajax({
+						 		url: '/api/promotions/'+id,
+						 		cache: false,
+						 		contentType: false,
+						 		processData: false,
+						 		type: 'PUT',
+						 		success: function(data){
+							 		vm.getPromotions();
 						 }
 					 });
 					}
@@ -584,7 +606,7 @@
            submitForm :function(){
                var form = document.querySelector('#addForm');
                var formdata = new FormData(form);
-               console.log(formdata);
+              //  console.log(formdata);
                jQuery.ajax({
               url: '/api/promotions',
               data: formdata,

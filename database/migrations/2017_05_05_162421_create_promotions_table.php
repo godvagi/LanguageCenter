@@ -15,12 +15,13 @@ class CreatePromotionsTable extends Migration
     {
       Schema::create('promotions', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('pro_id');
           $table->string('name');
           $table->string('startdate');
           $table->string('expdate');
-          $table->string('img');
-          $table->string('type');
-          $table->integer('total');
+          $table->string('img')->nullable();;
+          $table->integer('point');
+          $table->boolean('active')->default(1);
           $table->string('description');
           $table->timestamps();
           $table->softDeletes();

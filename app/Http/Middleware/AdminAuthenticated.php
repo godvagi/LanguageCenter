@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class AdminAuthenticated
 {
+
     /**
      * Handle an incoming request.
      *
@@ -15,13 +16,11 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if (Auth::guard($guard)->check()) {
-          if(Auth::user()->admin)  return redirect('/admin');
+        if (!Auth::user()->role == 'admin') {
           return redirect('/login');
         }
-
         return $next($request);
     }
 }

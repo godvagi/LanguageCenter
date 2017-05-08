@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PromotionsController extends Controller
+class AdminPromotionsController extends Controller
 {
   private $api = "http://languagecenter.dev/api/";
 
@@ -13,6 +13,7 @@ class PromotionsController extends Controller
       $this->middleware('auth', [
         'only' => ['create']
         ]);
+        $this->middleware('admin');
     }
 
   public function index()

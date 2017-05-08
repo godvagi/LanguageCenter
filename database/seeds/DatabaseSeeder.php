@@ -13,13 +13,13 @@ class DatabaseSeeder extends Seeder
     {
         App\Promotion::create([
           'name' => 'Adele',
+          'pro_id' => 1010,
           'startdate' => '26/50/50',
           'expdate' => '26/50/50',
           'img' => 'test.png',
-          'type' => 'percent',
-          'total' => '20',
+          'point' => '20',
           'description' => 'grammar',
       ]);
-    
+
     }
 }

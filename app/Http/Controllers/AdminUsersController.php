@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StudentsController extends Controller
+class AdminUsersController extends Controller
 {
   private $api = "http://languagecenter.dev/api/";
 
@@ -13,12 +13,12 @@ class StudentsController extends Controller
       $this->middleware('auth', [
         'only' => ['create']
         ]);
+      $this->middleware('admin');
     }
 
   public function index()
   {
-
-        return view('admin.student');
+        return view('admin.user');
 
   }
 }

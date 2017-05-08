@@ -61,24 +61,24 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li >
+                <li class="active">
                     <a href="{{ url('/admin/promotions') }}">
                         <i class="pe-7s-user"></i>
                         <p>Promotions</p>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/admin/students') }}">
+                    <a href="{{ url('/admin/users') }}">
                         <i class="pe-7s-note2"></i>
                         <p>Students</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="{{ url('/admin/courses') }}">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Courses</p>
-                    </a>
-                </li>
+								<li>
+										<a href="{{ url('/admin/subjects') }}">
+												<i class="pe-7s-news-paper"></i>
+												<p>Courses</p>
+										</a>
+								</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -117,10 +117,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Courses</a>
+                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Subject</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
+                    <!-- <ul class="nav navbar-nav navbar-left">
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-dashboard"></i>
@@ -151,10 +151,10 @@
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <!-- <li>
                            <a href="">
                                <p>Account</p>
                             </a>
@@ -175,7 +175,7 @@
                                 <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>
                               </ul>
-                        </li>
+                        </li> -->
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -201,29 +201,40 @@
 
 										<div class="card">
 													<div class="header">
-															<h4 class="title">All Courses</h4>
+															<h4 class="title">All Promotions</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
 													<div class="content table-responsive table-full-width" id="vue-app">
 
-
 													<table class="table table-hover table-striped">
 													<thead>
 														<tr>
-																<th>ID</th>
+																<th>Subject_ID</th>
 																<th>Name</th>
-																<th>Type</th>
-																<th>Price</th>
-																<th>Description</th>
+																<th>type</th>
+																<th>price</th>
+																<th>hour</th>
+																<th>point</th>
+																<th>description</th>
+																<th>Action</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr v-for="d in data">
-																<td>@{{ d.id }}</td>
+																<td>@{{ d.sub_id }}</td>
 																<td>@{{ d.name }}</td>
 																<td>@{{ d.type }}</td>
 																<td>@{{ d.price }}</td>
+																<td>@{{ d.hour }}</td>
+																<td>@{{ d.point }}</td>
 																<td>@{{ d.description }}</td>
+																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
+																<td>
+																	<form @submit.prevent = "deletePromotion(d.sub_id)" method="post" :id="'del'+d.sub_id" >
+																		<input type="hidden" name="id" :value="d.sub_id" required>
+										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
+										        		  </form>
+																</td>
 														</tr>
 													</tbody>
 													</table>
@@ -234,7 +245,7 @@
 										</div>
 									</div>
 
- 									<button type="button" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add promotions</button>
+ 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
 
 
 
@@ -278,14 +289,14 @@
         </div>
     </div>
 		  <div class="modal fade" id="addPromo" role="dialog">
-		    <div class="modal-dialog">
+		    <div class="modal-dialog modal-lg">
 		      <!-- Modal content-->
 		      <div class="modal-content">
 						<div id="vue-add-promotion">
 
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Course</h4>
+		          <h4 class="modal-title">Add Promotion</h4>
 		        </div>
 		        <div class="modal-body">
 							<!-- <div class="form-group">
@@ -322,7 +333,9 @@
 							       <textarea  class="form-control" rows="7" cols="60" name="des" placeholder="----description---" v-model="descript" > </textarea>
 							</div>
 							<button class="btn btn-success btn-fill" v-on:click="submit()">Submit</button> -->
-							<form class="form-horizontal" role="form" method="POST" v-on:submit.prevent="submit">
+<!--
+							<form class="form-horizontal" id="data" role="form" method="POST" v-on:submit.prevent="submit" enctype="multipart/form-data">
+
 									{{ csrf_field() }}
 
 									<div class="form-group">
@@ -331,7 +344,7 @@
 									</div>
 									<div class="form-group">
 									        <label for="img">Image</label>
-									        <input type="file" class="form-control"  id="img" name="img"  v-model="img" accept="image/*" required>
+									        <input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
 									</div>
 									<div class="form-group">
 									        <label for="startdate">Start Date</label>
@@ -355,17 +368,48 @@
 									        <input type="text" class="form-control" name="total" v-model="total" id="total" placeholder="" required>
 									</div>
 									<div class="form-group">
-									        <label for="descript">Descript</label>
+									        <label for="descript">Description</label>
 									       <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" v-model="descript" > </textarea>
 									</div>
 									<button class="btn btn-success btn-fill" type="submit">Submit</button>
 
-							</form>
+							</form> -->
+
+							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
+
+								<div class="form-group">
+												<label for="name">Subject ID</label>
+												<input type="text" class="form-control" name="sub_id"  id="sub_id" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="startdate">Name</label>
+												<input type="text" class="form-control" name="name" id="name" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="expdate">Type</label>
+												<input type="text" class="form-control" name="type" id="type"  placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="total">Price</label>
+												<input type="text" class="form-control" name="price" id="price" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="total">Hour</label>
+												<input type="text" class="form-control" name="hour" id="hour" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="total">Point</label>
+												<input type="text" class="form-control" name="point" id="point" placeholder="" required>
+								</div>
+								<div class="form-group">
+												<label for="descript">Description</label>
+											 <textarea  class="form-control" rows="7" cols="60" name="description" id="description" placeholder="----description---" > </textarea>
+								</div>
+
+            <button class="btn btn-success btn-fill" type="submit">Add Promotions</button>
+        </form>
 
 		        </div>
-
-
-
 
 
 		        <div class="modal-footer">
@@ -379,10 +423,27 @@
 		  </div>
 
 
-
-
-
-
+			<div id="vue-modal">
+			<div v-for="d in data">
+			<div class="modal fade" :id="'modal'+d.id" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">@{{ d.name }}</h4>
+						</div>
+						<div class="modal-body">
+							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
+						</div>
+						<div class="modal-footer">
+		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
+		        </div>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
 </body>
 
     <!--   Core JS Files   -->
@@ -408,5 +469,150 @@
 	<script src="/js/admin/demo.js"></script>
 	<script src="/js/app.js" charset="utf-8"></script>
 
+<script>
+		var vm = new Vue({
+        el: '#vue-app',
+        data:{
+					'data':[]
+				},
+				mounted: function(){
+					this.getPromotions();
+				},
+
+				methods:{
+					getPromotions: function(){
+						axios.get('/api/promotions', {
+            }).then(function (response) {
+                // console.log(response.data.data);
+								if(response.data.success) {
+									vm.data = response.data.data;
+									vmmodal.data = response.data.data;
+								}
+
+            }).catch(function (error) {
+
+                alert('Error (see console log)');
+                console.log(error);
+
+            });
+					},
+					deletePromotion :function(id){
+							// console.log(id);
+							jQuery.ajax({
+						 		url: '/api/promotions/'+id,
+						 		cache: false,
+						 		contentType: false,
+						 		processData: false,
+						 		type: 'DELETE',
+						 		success: function(data){
+							 		vm.getPromotions();
+									alert(data.data);
+						 }
+					 });
+					},
+					updateActive :function(id){
+							// console.log(id);
+							jQuery.ajax({
+						 		url: '/api/promotions/'+id,
+						 		cache: false,
+						 		contentType: false,
+						 		processData: false,
+						 		type: 'PUT',
+						 		success: function(data){
+							 		vm.getPromotions();
+
+						 }
+					 });
+					}
+
+				}
+    });
+
+		var vmmodal = new Vue({
+        el: '#vue-modal',
+        data:{
+					'data':[]
+				},
+				mounted: function(){
+					vm.getPromotions();
+				}
+    });
+
+		var vm2 = new Vue({
+    el: '#vue-add-promotion',
+    data: {
+        'image':''
+
+    },
+		  mounted: function(){
+				vm.getPromotions();
+			},
+    methods: {
+           onFileChange(e) {
+             var files = e.target.files || e.dataTransfer.files;
+             if (!files.length)
+               return;
+             this.createImage(files[0]);
+           },
+           createImage(file) {
+             var image = new Image();
+             var reader = new FileReader();
+             var vm4 = this;
+             reader.onload = (e) => {
+               vm4.image = e.target.result;
+             };
+             reader.readAsDataURL(file);
+           },
+           removeImage: function (e) {
+             this.image = '';
+           },
+           submitForm :function(){
+               var form = document.querySelector('#addForm');
+               var formdata = new FormData(form);
+              //  console.log(formdata);
+               jQuery.ajax({
+              url: '/api/promotions',
+              data: formdata,
+              cache: false,
+              contentType: false,
+              processData: false,
+              type: 'POST',
+              success: function(data){
+								vm.getPromotions();
+                alert(data.data);
+              }
+            });
+					}
+    }
+});
+
+// new Vue({
+//   el: '#app',
+//   data: {
+//     image: ''
+//   },
+//   methods: {
+//     onFileChange(e) {
+//       var files = e.target.files || e.dataTransfer.files;
+//       if (!files.length)
+//         return;
+//       this.createImage(files[0]);
+//     },
+//     createImage(file) {
+//       var image = new Image();
+//       var reader = new FileReader();
+//       var vm = this;
+//
+//       reader.onload = (e) => {
+//         vm.image = e.target.result;
+//       };
+//       reader.readAsDataURL(file);
+//     },
+//     removeImage: function (e) {
+//       this.image = '';
+//     }
+//   }
+// })
+</script>
 
 </html>

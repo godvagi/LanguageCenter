@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('promotions', 'Api\PromotionsController');
-Route::resource('students', 'Api\StudentsController');
+Route::resource('promotions', 'Api\AdminPromotionsController');
+Route::resource('users', 'Api\AdminUsersController');
+Route::resource('sections', 'Api\AdminSectionsController');
+Route::resource('subjects', 'Api\AdminSubjectsController');
 // Route::resource('promotions', 'Api\PromotionsController');

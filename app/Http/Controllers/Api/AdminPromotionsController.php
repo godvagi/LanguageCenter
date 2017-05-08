@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PromotionsController extends Controller
+class AdminPromotionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,17 +42,21 @@ class PromotionsController extends Controller
     {
       $promotion = new \App\Promotion;
       $promotion->name = trim($request->name);
+      $promotion->pro_id = $request->pro_id;
       $promotion->startdate = trim($request->startdate);
       $promotion->expdate = trim($request->expdate);
-      $promotion->type = trim($request->type);
-      $promotion->total = $request->total;
+      $promotion->active = $request->active;
+      $promotion->point = $request->point;
       $promotion->description = trim($request->descript);
-      if ($file = $request->file('image')) {
-        $name = time() . $file->getClientOriginalName();
-        $file->move('images/promotions', $name);
-        $promotion->img = $name;
-      }
       if (!empty($promotion->name) && $promotion->save()){
+        if ($file = $request->file('image')) {
+          $filetype = $file->getClientOriginalExtension();
+          // $name = time() . $file->getClientOriginalName();
+          // $filetype = $request->file('image')->getMimeType();\
+          $file->move('images/promotions', "$promotion->id.$filetype");
+          $promotion->img = "$promotion->id.$filetype";
+          $promotion->save();
+        }
           return [
             'success' => true,
             'data' => "Promotion '{$promotion->name}' was saved with id: {$promotion->id}",
@@ -100,7 +104,14 @@ class PromotionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $promotion = \App\Promotion::find($id);
+      if($promotion->active) $promotion->active = 0;
+      else $promotion->active = 1;
+      $promotion->save();
+      return [
+          'success' => true,
+          'data' => $promotion->active
+        ];
     }
 
     /**
@@ -111,8 +122,13 @@ class PromotionsController extends Controller
      */
     public function destroy($id)
     {
-      $promotion = \App\Promotion::find($id)->delete();
-
+      $promotion = \App\Promotion::find($id);
+      $name = $promotion->img;
+      $promotion->delete();
+      $path = public_path() . '/images/promotions/' . $name;
+      if(file_exists($path)) {
+        unlink($path);
+      }
       return [
           'success' => true,
           'data' => "Delete success!"
