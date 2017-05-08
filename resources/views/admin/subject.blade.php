@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="/images/admin/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Admin Easy Language</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -81,6 +81,12 @@
 											<p>subjects</p>
 									</a>
 							</li>
+							<li>
+									<a href="{{ url('/admin/vouchers') }}">
+											<i class="pe-7s-ticket"></i>
+											<p>voucher</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -119,7 +125,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Subjects</a>
+                    <a class="navbar-brand" href="{{ url('/admin/subjects') }}">Subjects</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <!-- <ul class="nav navbar-nav navbar-left">
@@ -207,12 +213,20 @@
 							<div class="row">
 									<div class="col-md-12">
 
-										<div class="card">
+										<div class="card" id="vue-app">
 													<div class="header">
-															<h4 class="title">All Subjects</h4>
+															<h4 class="title">All Subjects
+
+																<div class="input-group pull-right" style="width:250px">
+																	<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
+																		<div class="input-group-btn">
+																	<button class="btn btn-default" type="submit" v-on:click="searchName()"><i class="glyphicon glyphicon-search"></i></button>
+																	</div>
+																</div>
+															</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
-													<div class="content table-responsive table-full-width" id="vue-app">
+													<div class="content table-responsive table-full-width" >
 
 													<table class="table table-hover table-striped">
 													<thead>
@@ -442,7 +456,13 @@
 		var vm = new Vue({
         el: '#vue-app',
         data:{
-					'data':[]
+					'data':[],
+					'search':''
+				},
+				watch: {
+						search: function(){
+							this.searchName()
+						}
 				},
 				mounted: function(){
 					this.getPromotions();
@@ -478,7 +498,21 @@
 									alert(data.data);
 						 }
 					 });
-					}
+					},
+ 				 searchName: function(){
+ 						 // console.log(id);
+ 						 jQuery.ajax({
+ 							 url: '/api/subjects/'+this.search,
+ 							 cache: false,
+ 							 contentType: false,
+ 							 processData: false,
+ 							 type: 'GET',
+ 							 success: function(response){
+ 								 vm.data = response.data;
+ 								 vmmodal.data = response.data;
+ 						}
+ 					});
+ 				}
 
 				}
     });

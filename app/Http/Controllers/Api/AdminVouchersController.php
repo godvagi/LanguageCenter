@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminPromotionsController extends Controller
+class AdminVouchersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class AdminPromotionsController extends Controller
      */
     public function index()
     {
-      $promotions = \App\Promotion::all();
+      $voucher = \App\voucher::all();
       return [
           'success' => true,
-          'data' => $promotions
+          'data' => $voucher
       ];
 
     }
@@ -42,27 +42,24 @@ class AdminPromotionsController extends Controller
      */
     public function store(Request $request)
     {
-      $promotion = new \App\Promotion;
-      $promotion->name = trim($request->name);
-      $promotion->pro_id = $request->pro_id;
-      $promotion->startdate = trim($request->startdate);
-      $promotion->expdate = trim($request->expdate);
-      $promotion->active = $request->active;
-      $promotion->point = $request->point;
-      $promotion->description = trim($request->descript);
-      if (!empty($promotion->name) && $promotion->save()){
+      $voucher = new \App\voucher;
+      $voucher->name = trim($request->name);
+      $voucher->vou_id = $request->vou_id;
+      $voucher->code = $request->code;
+      $voucher->point = $request->point;
+      if (!empty($voucher->vou_id) && $voucher->save()){
         if ($file = $request->file('image')) {
           $filetype = $file->getClientOriginalExtension();
           // $name = time() . $file->getClientOriginalName();
           // $filetype = $request->file('image')->getMimeType();\
-          $file->move('images/promotions', "$promotion->id.$filetype");
-          $promotion->img = "/images/promotions/$promotion->id.$filetype";
-          $promotion->save();
+          $file->move('images/vouchers', "$voucher->id.$filetype");
+          $voucher->img = "/images/vouchers/$voucher->id.$filetype";
+          $voucher->save();
         }
           return [
             'success' => true,
-            'data' => "Promotion '{$promotion->name}' was saved with id: {$promotion->id}",
-            'id' => $promotion->id
+            'data' => "voucher '{$voucher->name}' was saved with id: {$voucher->id}",
+            'id' => $voucher->id
         ];
       } else {
           return [
@@ -83,10 +80,10 @@ class AdminPromotionsController extends Controller
      */
     public function show($id)
     {
-        $promotion = \App\Promotion::where('name','like',"%$id%")->get();
+        $voucher = \App\voucher::where('name','like',"%$id%")->get();
         return [
             'success' => true,
-            'data' => $promotion
+            'data' => $voucher
           ];
     }
 
@@ -110,14 +107,14 @@ class AdminPromotionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $promotion = \App\Promotion::find($id);
-      if($promotion->active) $promotion->active = 0;
-      else $promotion->active = 1;
-      $promotion->save();
-      return [
-          'success' => true,
-          'data' => $promotion->active
-        ];
+      // $voucher = \App\voucher::find($id);
+      // if($voucher->active) $voucher->active = 0;
+      // else $voucher->active = 1;
+      // $voucher->save();
+      // return [
+      //     'success' => true,
+      //     'data' => $voucher->active
+      //   ];
     }
 
     /**
@@ -128,10 +125,10 @@ class AdminPromotionsController extends Controller
      */
     public function destroy($id)
     {
-      $promotion = \App\Promotion::find($id);
-      $name = $promotion->img;
-      $promotion->delete();
-      $path = public_path() . '/images/promotions/' . $name;
+      $voucher = \App\voucher::find($id);
+      $name = $voucher->img;
+      $voucher->delete();
+      $path = public_path() . '/images/vouchers/' . $name;
       if(file_exists($path)) {
         unlink($path);
       }

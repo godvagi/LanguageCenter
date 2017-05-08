@@ -63,7 +63,7 @@
 											<p>users</p>
 									</a>
 							</li>
-							<li class="active">
+							<li >
 									<a href="{{ url('/admin/promotions') }}">
 											<!-- <i class="pe-7s-user"></i> -->
 											<i class="pe-7s-gift"></i>
@@ -76,13 +76,19 @@
 											<p>subjects</p>
 									</a>
 							</li>
-                <li>
-                    <a href="{{ url('/admin/vouchers') }}">
-                        <i class="pe-7s-ticket"></i>
-                        <p>voucher</p>
+							<li class="active">
+									<a href="{{ url('/admin/vouchers') }}">
+											<i class="pe-7s-ticket"></i>
+											<p>voucher</p>
+									</a>
+							</li>
+                <!-- <li>
+                    <a href="icons.html">
+                        <i class="pe-7s-science"></i>
+                        <p>Icons</p>
                     </a>
                 </li>
-              <!--   <li>
+                <li>
                     <a href="maps.html">
                         <i class="pe-7s-map-marker"></i>
                         <p>Maps</p>
@@ -114,7 +120,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Promotions</a>
+                    <a class="navbar-brand" href="{{ url('/admin/vouchers') }}">Voucher</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <!-- <ul class="nav navbar-nav navbar-left">
@@ -200,31 +206,29 @@
 							<div class="row">
 									<div class="col-md-12">
 
-										<div class="card" id="vue-app">
+										<div class="card">
 													<div class="header">
-															<h4 class="title">All Promotions
+															<h4 class="title">All Vouchers
+
+																<div class="input-group pull-right" style="width:250px">
+	            										<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
+	            											<div class="input-group-btn">
+	                								<button class="btn btn-default" type="submit" v-on:click="searchName()"><i class="glyphicon glyphicon-search"></i></button>
+	            										</div>
+	        											</div>
+															</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
-															<div class="input-group pull-right" style="width:250px">
-            										<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
-            											<div class="input-group-btn">
-                								<button class="btn btn-default" type="submit" v-on:click="searchName()"><i class="glyphicon glyphicon-search"></i></button>
-            										</div>
-        											</div>
-														</h4>
 													</div>
-													<div class="content table-responsive table-full-width" >
+													<div class="content table-responsive table-full-width" id="vue-app">
 
 													<table class="table table-hover table-striped">
 													<thead>
 														<tr>
 																<th>ID</th>
-															 <th>promotion ID</th>
+															  <th>voucher ID</th>
 																<th>Name</th>
-																<th>startdate</th>
-																<th>expdate</th>
 																<th>point</th>
-																<th>active</th>
-																<th>description</th>
+																<th>code</th>
 																<th>Image</th>
 																<th>Action</th>
 																<!-- <th>Time</th> -->
@@ -233,28 +237,14 @@
 													<tbody>
 														<tr v-for="d in data">
 																<td>@{{ d.id }}</td>
-																<td>@{{ d.pro_id }}</td>
+																<td>@{{ d.vou_id }}</td>
 																<td>@{{ d.name }}</td>
-																<td>@{{ d.startdate }}</td>
-																<td>@{{ d.expdate }}</td>
 																<td>@{{ d.point }}</td>
-																<td>
-																	<form @submit.prevent = "updateActive(d.id)" method="post" :id="'del'+d.id" >
-																		<input type="hidden" name="id" :value="d.id" required>
-										            		<!-- <button class="btn btn-danger btn-fill" type="submit"  >1</button> -->
-																		<div v-if="d.active">
-																				<button class="btn btn-success btn-fill" type="submit"  >True</button>
-										                 </div>
-										                <div v-else>
-										                    <button class="btn btn-danger btn-fill" type="submit"  >False</button>
-										                </div>
-										        		  </form>
-																</td>
-																<td>@{{ d.description }}</td>
-																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="'/images/promotions/' + d.img"  height="60" width="70"></td>
+																<td>@{{ d.code }}</td>
+																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="d.img"  height="60" width="70"></td>
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
 																<td>
-																	<form @submit.prevent = "deletePromotion(d.id)" method="post" :id="'del'+d.id" >
+																	<form @submit.prevent = "deleteVoucher(d.id)" method="post" :id="'del'+d.id" >
 																		<input type="hidden" name="id" :value="d.id" required>
 										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
 										        		  </form>
@@ -270,7 +260,7 @@
 										</div>
 									</div>
 
- 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Promotion</button>
+ 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addVoucher">Add Voucher</button>
 
 							</div>
 					</div>
@@ -288,15 +278,15 @@
 					</footer>
         </div>
     </div>
-		  <div class="modal fade" id="addPromo" role="dialog">
+		  <div class="modal fade" id="addVoucher" role="dialog">
 		    <div class="modal-dialog modal-lg">
 		      <!-- Modal content-->
 		      <div class="modal-content">
-						<div id="vue-add-promotion">
+						<div id="vue-add-voucher">
 
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Promotion</h4>
+		          <h4 class="modal-title">Add Voucher</h4>
 		        </div>
 		        <div class="modal-body">
 							<!-- <div class="form-group">
@@ -377,12 +367,12 @@
 
 							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
 								<div class="form-group">
-												<label for="name">Promotion Name</label>
+												<label for="name">Voucher Name</label>
 												<input type="text" class="form-control" name="name"  id="name" placeholder="" required>
 								</div>
 								<div class="form-group">
-												<label for="name">Promotion ID</label>
-												<input type="text" class="form-control" name="pro_id"  id="pro_id" placeholder="" required>
+												<label for="name">Voucher ID</label>
+												<input type="text" class="form-control" name="vou_id"  id="vou_id" placeholder="" required>
 								</div>
 
 								<!-- <div class="form-group">
@@ -403,32 +393,17 @@
 
 		                <input name="image" id="image" type="file" accept="image/*" class="form-control" @change="onFileChange">
 		            </div>
-								<div class="form-group">
-												<label for="active">Active</label>
-												<select  class="form-control" name="active"  id="active" required>
-														 <option value="" disabled selected>Please select active</option>
-														 <option value='1' >Yes</option>
-														 <option value='0' >No</option>
-													 </select>
-								</div>
-								<div class="form-group">
-												<label for="startdate">Start Date</label>
-												<input type="date" class="form-control" name="startdate" id="startdate" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="expdate">Exp Date</label>
-												<input type="date" class="form-control" name="expdate" id="expdate"  placeholder="" required>
-								</div>
+
 								<div class="form-group">
 												<label for="total">Point</label>
 												<input type="text" class="form-control" name="point" id="point" placeholder="" required>
 								</div>
 								<div class="form-group">
-												<label for="descript">Description</label>
-											 <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" > </textarea>
+												<label for="code">code</label>
+												<input type="text" class="form-control" name="code" id="code"  placeholder="" required>
 								</div>
 
-            <button class="btn btn-success btn-fill" type="submit">Add Promotions</button>
+            <button class="btn btn-success btn-fill" type="submit">Add Voucher</button>
         </form>
 
 		        </div>
@@ -456,7 +431,7 @@
 							<h4 class="modal-title">@{{ d.name }}</h4>
 						</div>
 						<div class="modal-body">
-							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
+							<img :src="d.img"  height="100%" width="100%">
 						</div>
 						<div class="modal-footer">
 		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
@@ -504,35 +479,32 @@
             }
         },
 				mounted: function(){
-					this.getPromotions();
+					this.getVouchers();
 				},
 				methods:{
-					getPromotions: function(){
-						axios.get('/api/promotions', {
+					getVouchers: function(){
+						axios.get('/api/vouchers', {
             }).then(function (response) {
                 // console.log(response.data.data);
 								if(response.data.success) {
 									vm.data = response.data.data;
 									vmmodal.data = response.data.data;
-									// response.data.data.forEach(function(product) {
-    							// 	console.log(product['created_at']);
-									// });
 								}
             }).catch(function (error) {
                 alert('Error (see console log)');
                 console.log(error);
             });
 					},
-					deletePromotion :function(id){
+					deleteVoucher :function(id){
 							// console.log(id);
 							jQuery.ajax({
-						 		url: '/api/promotions/'+id,
+						 		url: '/api/vouchers/'+id,
 						 		cache: false,
 						 		contentType: false,
 						 		processData: false,
 						 		type: 'DELETE',
 						 		success: function(data){
-							 		vm.getPromotions();
+							 		vm.getVouchers();
 									alert(data.data);
 						 }
 					 });
@@ -540,30 +512,16 @@
 					updateActive :function(id){
 							// console.log(id);
 							jQuery.ajax({
-						 		url: '/api/promotions/'+id,
+						 		url: '/api/vouchers/'+id,
 						 		cache: false,
 						 		contentType: false,
 						 		processData: false,
 						 		type: 'PUT',
 						 		success: function(data){
-							 		vm.getPromotions();
+							 		vm.getVouchers();
 						 }
 					 });
-				 },
-				 searchName: function(){
-						 // console.log(id);
-						 jQuery.ajax({
-							 url: '/api/promotions/'+this.search,
-							 cache: false,
-							 contentType: false,
-							 processData: false,
-							 type: 'GET',
-							 success: function(response){
-								 vm.data = response.data;
-								 vmmodal.data = response.data;
-						}
-					});
-				}
+					}
 
 				}
     });
@@ -574,18 +532,18 @@
 					'data':[]
 				},
 				mounted: function(){
-					vm.getPromotions();
+					// vm.getVouchers();
 				}
     });
 
 		var vm2 = new Vue({
-    el: '#vue-add-promotion',
+    el: '#vue-add-voucher',
     data: {
         'image':''
 
     },
 		  mounted: function(){
-				vm.getPromotions();
+				// vm.getVouchers();
 			},
     methods: {
            onFileChange(e) {
@@ -611,14 +569,14 @@
                var formdata = new FormData(form);
               //  console.log(formdata);
                jQuery.ajax({
-              url: '/api/promotions',
+              url: '/api/vouchers',
               data: formdata,
               cache: false,
               contentType: false,
               processData: false,
               type: 'POST',
               success: function(data){
-								vm.getPromotions();
+								vm.getVouchers();
                 alert(data.data);
 								document.getElementById("addForm").reset();
               }

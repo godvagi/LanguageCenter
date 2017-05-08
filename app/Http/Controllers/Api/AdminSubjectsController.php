@@ -70,7 +70,11 @@ class AdminSubjectsController extends Controller
      */
     public function show($id)
     {
-        //
+      $subject = \App\Subject::where('name','like',"%$id%")->get();
+      return [
+          'success' => true,
+          'data' => $subject
+        ];
     }
 
     /**

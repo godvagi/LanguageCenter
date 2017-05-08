@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="/images/admin/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Admin Easy Language</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -77,6 +77,12 @@
 											<p>subjects</p>
 									</a>
 							</li>
+							<li>
+									<a href="{{ url('/admin/vouchers') }}">
+											<i class="pe-7s-ticket"></i>
+											<p>voucher</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -115,7 +121,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Users</a>
+                    <a class="navbar-brand" href="{{ url('/admin/users') }}">Users</a>
                 </div>
                 <div class="collapse navbar-collapse">
 
