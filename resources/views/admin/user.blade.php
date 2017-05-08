@@ -399,8 +399,8 @@
 				submitAddUser: function () {
 						// alert('halo');
 					var form = document.querySelector('#addUser');
- 					 var formdata = new FormData(form);
- 					//  console.log(formdata);
+ 					var formdata = new FormData(form);
+ 					console.log("hello "+formdata);
  					 jQuery.ajax({
  							url: '/register',
  							data: formdata,
