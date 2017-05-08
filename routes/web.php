@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@admin');
 // Route::get('admin/promotions', 'PromotionsController@index');
 
 
-Route::group(['middleware' => 'admin'],function(){
+Route::group(['middleware' => 'auth'],function(){
     Route::get('/admin',function(){
       return view('admin.index');
     })->name('admin');
