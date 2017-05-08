@@ -31,7 +31,6 @@ Route::group(['middleware' => 'auth'],function(){
     })->name('admin');
     Route::get('admin/users', 'AdminUsersController@index')->name('admin');
     Route::get('admin/subjects', 'AdminSubjectsController@index')->name('admin');
-
     Route::get('admin/promotions', 'AdminPromotionsController@index')->name('admin');
     Route::get('/student',function(){
       return view('student.index');

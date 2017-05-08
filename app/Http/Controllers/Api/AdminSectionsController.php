@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminPromotionsController extends Controller
+class AdminSectionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class AdminPromotionsController extends Controller
      */
     public function index()
     {
-      $promotions = \App\Promotion::all();
+      $sections = \App\Section::all();
       return [
           'success' => true,
-          'data' => $promotions
+          'data' => $sections
       ];
 
     }
@@ -40,27 +40,17 @@ class AdminPromotionsController extends Controller
      */
     public function store(Request $request)
     {
-      $promotion = new \App\Promotion;
-      $promotion->name = trim($request->name);
-      $promotion->pro_id = $request->pro_id;
-      $promotion->startdate = trim($request->startdate);
-      $promotion->expdate = trim($request->expdate);
-      $promotion->active = $request->active;
-      $promotion->point = $request->point;
-      $promotion->description = trim($request->descript);
-      if (!empty($promotion->name) && $promotion->save()){
-        if ($file = $request->file('image')) {
-          $filetype = $file->getClientOriginalExtension();
-          // $name = time() . $file->getClientOriginalName();
-          // $filetype = $request->file('image')->getMimeType();\
-          $file->move('images/promotions', "$promotion->id.$filetype");
-          $promotion->img = "$promotion->id.$filetype";
-          $promotion->save();
-        }
+      $section = new \App\Section;
+      $user = \App\User::where('email','=',$request->cEmail)->first();
+      $sub = \App\Subject::where('sub_id','=',$request->cSubId)->first();
+      $section->email = $user->email;
+      $section->sub_id = $sub->sub_id;
+      $section->time_left = $sub->hour;
+      if ($section->save()){
           return [
             'success' => true,
-            'data' => "Promotion '{$promotion->name}' was saved with id: {$promotion->id}",
-            'id' => $promotion->id
+            'data' => "Section '{$section->email}' was saved with id: {$section->id}",
+            'id' => $section->id
         ];
       } else {
           return [
@@ -104,14 +94,7 @@ class AdminPromotionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $promotion = \App\Promotion::find($id);
-      if($promotion->active) $promotion->active = 0;
-      else $promotion->active = 1;
-      $promotion->save();
-      return [
-          'success' => true,
-          'data' => $promotion->active
-        ];
+
     }
 
     /**
@@ -122,16 +105,6 @@ class AdminPromotionsController extends Controller
      */
     public function destroy($id)
     {
-      $promotion = \App\Promotion::find($id);
-      $name = $promotion->img;
-      $promotion->delete();
-      $path = public_path() . '/images/promotions/' . $name;
-      if(file_exists($path)) {
-        unlink($path);
-      }
-      return [
-          'success' => true,
-          'data' => "Delete success!"
-        ];
+
     }
 }

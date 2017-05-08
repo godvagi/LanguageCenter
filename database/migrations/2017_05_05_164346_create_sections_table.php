@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionTable extends Migration
+class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSectionTable extends Migration
      */
     public function up()
     {
-      Schema::create('section', function (Blueprint $table) {
+      Schema::create('sections', function (Blueprint $table) {
           $table->increments('id');
           $table->string('email');  // change email
           $table->integer('sub_id');
@@ -26,7 +26,7 @@ class CreateSectionTable extends Migration
                 ->on('users');
           $table->foreign('sub_id')
                 ->references('sub_id')
-                ->on('subject');
+                ->on('subjects');
       });
     }
 
@@ -37,6 +37,6 @@ class CreateSectionTable extends Migration
      */
     public function down()
     {
-          Schema::dropIfExists('section');
+          Schema::dropIfExists('sections');
     }
 }

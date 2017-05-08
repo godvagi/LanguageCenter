@@ -14,7 +14,11 @@ class AdminSubjectsController extends Controller
      */
     public function index()
     {
-        //
+        $subjects = \App\Subject::all();
+        return [
+          'success' => true,
+          'data' => $subjects
+      ];
     }
 
     /**
@@ -35,7 +39,27 @@ class AdminSubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $subject = new \App\Subject;
+      $subject->name = trim($request->name);
+      $subject->sub_id = $request->sub_id;
+      $subject->type = trim($request->type);
+      $subject->price = $request->price;
+      $subject->hour = $request->hour;
+      $subject->point = $request->point;
+      $subject->description = trim($request->description);
+      if (!empty($subject->sub_id) && $subject->save()){
+
+          return [
+            'success' => true,
+            'data' => "Subject '{$subject->name}' was saved with id: {$subject->id}",
+            'id' => $subject->id
+        ];
+      } else {
+          return [
+              'success' => false,
+              'data' => "Some error occurred"
+            ];
+      }
     }
 
     /**
@@ -80,6 +104,10 @@ class AdminSubjectsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $subject = \App\Subject::where('sub_id','=',$id)->delete();
+      return [
+          'success' => true,
+          'data' => "Delete success!"
+        ];
     }
 }

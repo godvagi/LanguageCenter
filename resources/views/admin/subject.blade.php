@@ -61,7 +61,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="{{ url('/admin/promotions') }}">
                         <i class="pe-7s-user"></i>
                         <p>Promotions</p>
@@ -70,13 +70,13 @@
                 <li>
                     <a href="{{ url('/admin/users') }}">
                         <i class="pe-7s-note2"></i>
-                        <p>Students</p>
+                        <p>users</p>
                     </a>
                 </li>
-								<li>
+								<li class="active">
 										<a href="{{ url('/admin/subjects') }}">
 												<i class="pe-7s-news-paper"></i>
-												<p>Courses</p>
+												<p>subjects</p>
 										</a>
 								</li>
                 <!-- <li>
@@ -296,7 +296,7 @@
 
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Promotion</h4>
+		          <h4 class="modal-title">Add Subject</h4>
 		        </div>
 		        <div class="modal-body">
 							<!-- <div class="form-group">
@@ -406,7 +406,7 @@
 											 <textarea  class="form-control" rows="7" cols="60" name="description" id="description" placeholder="----description---" > </textarea>
 								</div>
 
-            <button class="btn btn-success btn-fill" type="submit">Add Promotions</button>
+            <button class="btn btn-success btn-fill" type="submit">Add Subject</button>
         </form>
 
 		        </div>
@@ -423,27 +423,7 @@
 		  </div>
 
 
-			<div id="vue-modal">
-			<div v-for="d in data">
-			<div class="modal fade" :id="'modal'+d.id" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">@{{ d.name }}</h4>
-						</div>
-						<div class="modal-body">
-							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
-						</div>
-						<div class="modal-footer">
-		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
-		        </div>
-					</div>
-				</div>
-			</div>
-			</div>
-			</div>
+
 </body>
 
     <!--   Core JS Files   -->
@@ -481,12 +461,12 @@
 
 				methods:{
 					getPromotions: function(){
-						axios.get('/api/promotions', {
+						axios.get('/api/subjects', {
             }).then(function (response) {
                 // console.log(response.data.data);
 								if(response.data.success) {
 									vm.data = response.data.data;
-									vmmodal.data = response.data.data;
+
 								}
 
             }).catch(function (error) {
@@ -499,7 +479,7 @@
 					deletePromotion :function(id){
 							// console.log(id);
 							jQuery.ajax({
-						 		url: '/api/promotions/'+id,
+						 		url: '/api/subjects/'+id,
 						 		cache: false,
 						 		contentType: false,
 						 		processData: false,
@@ -509,34 +489,12 @@
 									alert(data.data);
 						 }
 					 });
-					},
-					updateActive :function(id){
-							// console.log(id);
-							jQuery.ajax({
-						 		url: '/api/promotions/'+id,
-						 		cache: false,
-						 		contentType: false,
-						 		processData: false,
-						 		type: 'PUT',
-						 		success: function(data){
-							 		vm.getPromotions();
-
-						 }
-					 });
 					}
 
 				}
     });
 
-		var vmmodal = new Vue({
-        el: '#vue-modal',
-        data:{
-					'data':[]
-				},
-				mounted: function(){
-					vm.getPromotions();
-				}
-    });
+
 
 		var vm2 = new Vue({
     el: '#vue-add-promotion',
@@ -571,7 +529,7 @@
                var formdata = new FormData(form);
               //  console.log(formdata);
                jQuery.ajax({
-              url: '/api/promotions',
+              url: '/api/subjects',
               data: formdata,
               cache: false,
               contentType: false,

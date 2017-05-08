@@ -1,25 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<style media="screen">
-.middle{
 
-  /*position: fixed;
-  left: 50%;
-  top: 50%;
-
-  z-index: 100;
-
-  height: 400px;
-  margin-top: -200px;
-
-  width: 600px;
-  margin-left: -300px;*/
-
-
-
-}
-</style>
 
 <div class="container">
     <div class="row">
@@ -27,7 +9,6 @@
           <br>
           <form class="form-horizontal middle" role="form" method="POST" action="{{ route('login') }}">
               {{ csrf_field() }}
-
               <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                   <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
@@ -80,7 +61,7 @@
           </form>
         </div>
     </div>
-  
+
 
 
 

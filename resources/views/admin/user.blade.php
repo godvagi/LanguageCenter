@@ -64,17 +64,17 @@
                     </a>
                 </li>
 								<li class="active">
-										<a href="{{ url('/admin/students') }}">
+										<a href="{{ url('/admin/users') }}">
 												<i class="pe-7s-note2"></i>
-												<p>Students</p>
+												<p>users</p>
 										</a>
 								</li>
-								<li>
-                    <a href="{{ url('/admin/courses') }}">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Courses</p>
-                    </a>
-                </li>
+								<li >
+										<a href="{{ url('/admin/subjects') }}">
+												<i class="pe-7s-news-paper"></i>
+												<p>subjects</p>
+										</a>
+								</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -113,65 +113,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Students</a>
+                    <a class="navbar-brand" href="#">Users</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
+
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                           <a href="">
-                               <p>Account</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <p>
-										Dropdown
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                              </ul>
-                        </li>
+
+
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -191,6 +140,7 @@
 
 
         <div class="content">
+						<div id='vue-add-course'>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
@@ -200,12 +150,12 @@
 															<p class="category"></p>
 													</div>
 													<div class="content">
-														<form>
-															<div class="row">
+														<form @submit.prevent = "submitAddUser" method="post" id="addUser" enctype="multipart/form-data">
+															<!-- <div class="row">
 																	<div class="col-md-12">
 																			<div class="form-group">
 																					<label>Name</label>
-																					<input type="text" class="form-control" placeholder="name" required>
+																					<input type="text" class="form-control" name="name" id="name" placeholder="name" required>
 																			</div>
 																	</div>
 															</div>
@@ -213,7 +163,7 @@
 																	<div class="col-md-12">
 																			<div class="form-group">
 																					<label>E-mail Address</label>
-																					<input type="email" class="form-control" placeholder="E-mail" required>
+																					<input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required>
 																			</div>
 																	</div>
 															</div>
@@ -221,7 +171,7 @@
 																	<div class="col-md-12">
 																			<div class="form-group">
 																					<label>Password</label>
-																					<input id="password" type="password" class="form-control" name="password" required>
+																					<input id="password" type="password" name="email" id="email" class="form-control" name="password" required>
 																			</div>
 																	</div>
 															</div>
@@ -234,9 +184,80 @@
 																	</div>
 															</div>
 
-															<button type="submit" class="btn btn-info btn-fill pull-right">Create Students</button>
+															<button type="submit" class="btn btn-info btn-fill pull-right">Create User</button>
 															<div class="clearfix"></div>
-														</form>
+ -->
+ {{ csrf_field() }}
+
+ <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+ 		<label for="name" class="col-md-4 control-label">Name</label>
+
+ 		<div class="col-md-6">
+ 				<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+ 				@if ($errors->has('name'))
+ 						<span class="help-block">
+ 								<strong>{{ $errors->first('name') }}</strong>
+ 						</span>
+ 				@endif
+ 		</div>
+ </div>
+
+ <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+ 		<label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+ 		<div class="col-md-6">
+ 				<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+ 				@if ($errors->has('email'))
+ 						<span class="help-block">
+ 								<strong>{{ $errors->first('email') }}</strong>
+ 						</span>
+ 				@endif
+ 		</div>
+ </div>
+
+ 		<label for="password" class="col-md-4 control-label">Role</label>
+ 		<div class="col-md-6">
+			<select  class="form-control" name="role"  id="role" required>
+					 <option value='user' >User</option>
+					 <option value='admin' >Admin</option>
+				 </select>
+ 		</div>
+
+
+ <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+ 		<label for="password" class="col-md-4 control-label">Password</label>
+
+ 		<div class="col-md-6">
+ 				<input id="password" type="password" class="form-control" name="password" required>
+
+ 				@if ($errors->has('password'))
+ 						<span class="help-block">
+ 								<strong>{{ $errors->first('password') }}</strong>
+ 						</span>
+ 				@endif
+ 		</div>
+ </div>
+
+ <div class="form-group">
+ 		<label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+ 		<div class="col-md-6">
+ 				<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+ 		</div>
+ </div>
+
+ <div class="form-group">
+ 		<div class="col-md-6 col-md-offset-4">
+ 				<button type="submit" class="btn btn-primary">
+ 						Register
+ 				</button>
+ 		</div>
+ </div>
+
+
+												</form>
 													</div>
                         </div>
                     </div>
@@ -244,39 +265,43 @@
 										<div class="col-md-6">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Add Course For Students</h4>
+                                <h4 class="title">Add Subject For Students</h4>
                                 <p class="category"></p>
                             </div>
                             <div class="content">
 
-																<div id='vue-add-course'>
+																<form @submit.prevent = "submitAddCourse" method="post" id="addCourse" enctype="multipart/form-data">
 																<div class="row">
-																		<div class="col-md-12">
-																				<div class="form-group">
-																						<label>E-mail Address</label>
-																						<input type="email" class="form-control" v-modal:='cEmail' placeholder="E-mail" required>
-																				</div>
-																		</div>
-																</div>
-																<div class="row">
-																		<div class="col-md-12">
-																				<div class="form-group">
-																						<label>Course ID</label>
-																						<input type="text" class="form-control" v-modal:='cCourseID' placeholder="Course ID" required>
-																				</div>
-																		</div>
-																</div>
-																	<button class="btn btn-info btn-fill pull-right" v-on:click="submitAddCourse()">Add Course For Students</button>
+																	<div class="col-md-12">
+																			<div class="form-group">
+																					<label>E-mail Address</label>
+																					<input type="email" class="form-control" name="cEmail" id="cEmail" placeholder="E-mail" required>
+																			</div>
+																	</div>
+																	</div>
+																	<div class="row">
+																			<div class="col-md-12">
+																					<div class="form-group">
+																							<label>Subject ID</label>
+																							<input type="text" class="form-control" name="cSubId" id="cSubId"  placeholder="Subject ID" required>
+																					</div>
+																			</div>
+																	</div>
+
+
+
+										            <button class="btn btn-info btn-fill pull-right" type="submit">Add Course For Students</button>
+
+										        </form>
 																	<!-- <button v-on:click='submitAddCourse' class="btn btn-info btn-fill pull-right">Add Course For Students</button> -->
 																	<div class="clearfix"></div>
-																</div>
-
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
+						</div>
         </div>
 
 
@@ -350,27 +375,25 @@
     data: {
         'cEmail': '',
         'cCourseID': ''
-
-
-
     },
     methods: {
 
         submitAddCourse: function () {
 						// alert('halo');
-            axios.post('http://languagecenter.dev/api/students', {
-                email: this.cEmail,
-                courseID: this.cCourseID
-
-            }).then(function (response) {
-                console.log(response.data.data);
-                alert(response.data.data);
-            }).catch(function (error) {
-
-                alert('Error (see console log)');
-                console.log(error);
-
-            });
+					var form = document.querySelector('#addCourse');
+ 					 var formdata = new FormData(form);
+ 					//  console.log(formdata);
+ 					 jQuery.ajax({
+ 							url: '/api/sections',
+ 							data: formdata,
+ 							cache: false,
+ 							contentType: false,
+ 							processData: false,
+ 							type: 'POST',
+ 							success: function(data){
+ 								alert(data.data);
+ 							}
+ 						});
 
         }
 

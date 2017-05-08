@@ -67,16 +67,16 @@
                         <p>Promotions</p>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url('/admin/users') }}">
-                        <i class="pe-7s-note2"></i>
-                        <p>Students</p>
-                    </a>
-                </li>
 								<li>
+										<a href="{{ url('/admin/users') }}">
+												<i class="pe-7s-note2"></i>
+												<p>users</p>
+										</a>
+								</li>
+								<li >
 										<a href="{{ url('/admin/subjects') }}">
 												<i class="pe-7s-news-paper"></i>
-												<p>Courses</p>
+												<p>subjects</p>
 										</a>
 								</li>
                 <!-- <li>

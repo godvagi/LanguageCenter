@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdminUsersController extends Controller
+class AdminSectionsController extends Controller
 {
   private $api = "http://languagecenter.dev/api/";
 
