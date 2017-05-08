@@ -151,113 +151,139 @@
 													</div>
 													<div class="content">
 														<form @submit.prevent = "submitAddUser" method="post" id="addUser" enctype="multipart/form-data">
-															<!-- <div class="row">
-																	<div class="col-md-12">
-																			<div class="form-group">
-																					<label>Name</label>
-																					<input type="text" class="form-control" name="name" id="name" placeholder="name" required>
-																			</div>
-																	</div>
-															</div>
+														 {{ csrf_field() }}
 															<div class="row">
-																	<div class="col-md-12">
-																			<div class="form-group">
-																					<label>E-mail Address</label>
-																					<input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required>
-																			</div>
-																	</div>
-															</div>
+																<div class="col-md-12">
+																		<div class="form-group">
+																				<!-- <label>Name</label>
+																				<input type="text" class="form-control" name="name" id="name" placeholder="Name" required> -->
+																				<label>Name</label>
+																				<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="name" required autofocus>
+																				<span class="help-block">
+																						<strong>@{{name}}</strong>
+																				</span>
+																		</div>
+																</div>
+																</div>
 															<div class="row">
-																	<div class="col-md-12">
-																			<div class="form-group">
-																					<label>Password</label>
-																					<input id="password" type="password" name="email" id="email" class="form-control" name="password" required>
-																			</div>
-																	</div>
-															</div>
-															<div class="row">
-																	<div class="col-md-12">
-																			<div class="form-group">
-																					<label>Confirm Password</label>
+																<div class="col-md-12">
+																		<div class="form-group">
+																			<label>E-mail</label>
+																			<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required>
+																			<span class="help-block">
+																					@{{email}}
+																			</span>
+																		</div>
+																</div>
+																</div>
+																<div class="row">
+																		<div class="col-md-12">
+																				<div class="form-group">
+																					<label>role</label>
+																					<select  class="form-control" name="role"  id="role" required>
+																							 <option value='user' >User</option>
+																							 <option value='admin' >Admin</option>
+																						 </select>
+																				</div>
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="col-md-12">
+																				<div class="form-group ">
+																					<label>password</label>
+																					<input id="password" type="password" class="form-control" name="password"  required>
+																					<span class="text-danger">
+																							@{{password}}
+																					</span>
+																				</div>
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="col-md-12">
+																				<div class="form-group">
+																					<label>confirm password</label>
 																					<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-																			</div>
-																	</div>
-															</div>
-
-															<button type="submit" class="btn btn-info btn-fill pull-right">Create User</button>
-															<div class="clearfix"></div>
- -->
- {{ csrf_field() }}
-
- <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
- 		<label for="name" class="col-md-4 control-label">Name</label>
-
- 		<div class="col-md-6">
- 				<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
- 				@if ($errors->has('name'))
- 						<span class="help-block">
- 								<strong>{{ $errors->first('name') }}</strong>
- 						</span>
- 				@endif
- 		</div>
- </div>
-
- <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
- 		<label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
- 		<div class="col-md-6">
- 				<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
- 				@if ($errors->has('email'))
- 						<span class="help-block">
- 								<strong>{{ $errors->first('email') }}</strong>
- 						</span>
- 				@endif
- 		</div>
- </div>
-
- 		<label for="password" class="col-md-4 control-label">Role</label>
- 		<div class="col-md-6">
-			<select  class="form-control" name="role"  id="role" required>
-					 <option value='user' >User</option>
-					 <option value='admin' >Admin</option>
-				 </select>
- 		</div>
+																				</div>
+																		</div>
+																</div>
 
 
- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
- 		<label for="password" class="col-md-4 control-label">Password</label>
 
- 		<div class="col-md-6">
- 				<input id="password" type="password" class="form-control" name="password" required>
+															<button class="btn btn-info btn-fill pull-right" type="submit">Add User</button>
 
- 				@if ($errors->has('password'))
- 						<span class="help-block">
- 								<strong>{{ $errors->first('password') }}</strong>
- 						</span>
- 				@endif
- 		</div>
- </div>
+													</form>
+													<div class="clearfix"></div>
+													<!-- <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}"> -->
+														<!-- <form @submit.prevent = "submitAddUser" method="post" id="addUser" enctype="multipart/form-data">
+			                        {{ csrf_field() }}
 
- <div class="form-group">
- 		<label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+			                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+			                            <label for="name" class="col-md-4 control-label">Name</label>
 
- 		<div class="col-md-6">
- 				<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
- 		</div>
- </div>
+			                            <div class="col-md-6">
+			                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
- <div class="form-group">
- 		<div class="col-md-6 col-md-offset-4">
- 				<button type="submit" class="btn btn-primary">
- 						Register
- 				</button>
- 		</div>
- </div>
+			                                 @if ($errors->has('name'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('name') }}</strong>
+			                                    </span>
+			                                @endif
+																			<span class="help-block">
+																					<strong>@{{name}}</strong>
+																			</span>
+			                            </div>
+			                        </div>
 
+			                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+			                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-												</form>
+			                            <div class="col-md-6">
+			                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+			                                 @if ($errors->has('email'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('email') }}</strong>
+			                                    </span>
+			                                @endif
+																			<span class="help-block">
+																					<strong>@{{email}}</strong>
+																			</span>
+			                            </div>
+			                        </div>
+
+			                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+			                            <label for="password" class="col-md-4 control-label">Password</label>
+
+			                            <div class="col-md-6">
+			                                <input id="password" type="password" class="form-control" name="password" required>
+
+			                                 @if ($errors->has('password'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('password') }}</strong>
+			                                    </span>
+			                                @endif
+																			<span class="help-block">
+																					<strong>@{{password}}</strong>
+																			</span>
+			                            </div>
+			                        </div>
+
+			                        <div class="form-group">
+			                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+			                            <div class="col-md-6">
+			                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+			                            </div>
+			                        </div>
+
+			                        <div class="form-group">
+			                            <div class="col-md-6 col-md-offset-4">
+			                                <button type="submit" class="btn btn-primary">
+			                                    Register
+			                                </button>
+			                            </div>
+			                        </div>
+			                    </form> -->
 													</div>
                         </div>
                     </div>
@@ -287,8 +313,6 @@
 																					</div>
 																			</div>
 																	</div>
-
-
 
 										            <button class="btn btn-info btn-fill pull-right" type="submit">Add Course For Students</button>
 
@@ -373,8 +397,10 @@
 		var vm = new Vue({
     el: '#vue-add-course',
     data: {
-        'cEmail': '',
-        'cCourseID': ''
+        'password': '',
+        'name': '',
+				'email': ''
+
     },
     methods: {
 
@@ -396,6 +422,7 @@
  						});
 
         },
+
 				submitAddUser: function () {
 						// alert('halo');
 					var form = document.querySelector('#addUser');
@@ -409,8 +436,15 @@
  							processData: false,
  							type: 'POST',
  							success: function(data){
- 								alert(data.data);
- 							}
+ 								alert("Add user success");
+								document.getElementById("addUser").reset();
+ 							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								var jsonResponse = JSON.parse(xhr.responseText);
+								vm.email = jsonResponse["email"];
+								vm.name = jsonResponse["name"];
+								vm.password = jsonResponse["password"];
+	      			}
  						});
 
         }

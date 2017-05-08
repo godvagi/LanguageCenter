@@ -52,11 +52,10 @@ class LoginController extends Controller
       ]))
       {
         $user =\App\User::where('email','=',$form['email'])->first();
-
         if($user->is_admin()){
           return redirect()->route('admin');
         }
-        return redirect()->route('student');
+        return redirect()->route('/');
       }
 
 

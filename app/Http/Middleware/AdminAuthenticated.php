@@ -18,8 +18,8 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->role == 'admin') {
-          return redirect('/login');
+        if (Auth::user()->role == 'user') {
+          return redirect('/');
         }
         return $next($request);
     }

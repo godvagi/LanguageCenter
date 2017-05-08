@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class AdminUsersController extends Controller
 {
+    use RegistersUsers;
     /**
      * Display a listing of the resource.
      *
@@ -14,22 +17,7 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-      $user = \App\User::where('email','=','s@s.com')->first();
-      $std = new \App\Section;
-      $std->user_id = $user->id;
-      $std->course_id = 1;
-      if ($std->save()){
-          return [
-            'success' => true,
-            'data' => "Student '{$std->email}' was saved with id: {$std->id}",
-            'id' => $std->id
-        ];
-      } else {
-          return [
-              'success' => false,
-              'data' => "Some error occurred"
-            ];
-      }
+
     }
 
     /**
@@ -50,22 +38,7 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = \App\User::where('email','=',trim($request->email))->first();
-        $std = new \App\Section;
-        $std->user_id = $user->id;
-        $std->course_id = $request->courseID;
-        if ($std->save()){
-            return [
-              'success' => true,
-              'data' => "Student '{$std->email}' was saved with id: {$std->id}",
-              'id' => $std->id
-          ];
-        } else {
-            return [
-                'success' => false,
-                'data' => "Some error occurred"
-              ];
-        }
+      $user = new \App\User;
     }
 
     /**

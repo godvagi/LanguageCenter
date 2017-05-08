@@ -25,14 +25,14 @@ Route::get('/home', 'HomeController@admin');
 // Route::get('admin/promotions', 'PromotionsController@index');
 
 
-Route::group(['middleware' => 'auth'],function(){
+Route::group(['middleware' => 'admin'],function(){
     Route::get('/admin',function(){
       return view('admin.index');
     })->name('admin');
     Route::get('admin/users', 'AdminUsersController@index')->name('admin');
     Route::get('admin/subjects', 'AdminSubjectsController@index')->name('admin');
     Route::get('admin/promotions', 'AdminPromotionsController@index')->name('admin');
-    Route::get('/student',function(){
-      return view('student.index');
-    })->name('student');
+    // Route::get('/student',function(){
+    //   return view('student.index');
+    // })->name('student');
 });
