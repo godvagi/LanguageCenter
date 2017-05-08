@@ -206,7 +206,7 @@
 							<div class="row">
 									<div class="col-md-12">
 
-										<div class="card">
+										<div class="card" id="vue-app">
 													<div class="header">
 															<h4 class="title">All Vouchers
 
@@ -219,7 +219,7 @@
 															</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
-													<div class="content table-responsive table-full-width" id="vue-app">
+													<div class="content table-responsive table-full-width" >
 
 													<table class="table table-hover table-striped">
 													<thead>
@@ -521,7 +521,21 @@
 							 		vm.getVouchers();
 						 }
 					 });
-					}
+					},
+ 				 searchName: function(){
+ 						 // console.log(id);
+ 						 jQuery.ajax({
+ 							 url: '/api/vouchers/'+this.search,
+ 							 cache: false,
+ 							 contentType: false,
+ 							 processData: false,
+ 							 type: 'GET',
+ 							 success: function(response){
+ 								 vm.data = response.data;
+ 								 vmmodal.data = response.data;
+ 						}
+ 					});
+ 				}
 
 				}
     });
