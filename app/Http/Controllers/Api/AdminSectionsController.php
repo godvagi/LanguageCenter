@@ -46,7 +46,8 @@ class AdminSectionsController extends Controller
       $section->email = $user->email;
       $section->sub_id = $sub->sub_id;
       $section->time_left = $sub->hour;
-      if ($section->save()){
+      $user->point = $sub->point;
+      if ($section->save() && $user->save()){
           return [
             'success' => true,
             'data' => "Section '{$section->email}' was saved with id: {$section->id}",

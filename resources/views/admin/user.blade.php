@@ -433,6 +433,9 @@
  							success: function(data){
  								alert("Add user success");
 								document.getElementById("addUser").reset();
+								vm.email ="";
+								vm.name = "";
+								vm.password = "";
  							},
 							error: function (xhr, ajaxOptions, thrownError) {
 								var jsonResponse = JSON.parse(xhr.responseText);

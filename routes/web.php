@@ -12,18 +12,27 @@
 */
 
 
-Route::get('/subject', function () {
-    return view('subject');
-});
-Route::get('/', function () {
-    return view('index');
-});
-//Route::resource('admin/data','Admin\DataController');
+
+
+// Route::get('/login','loginController@index');
+Route::get('/','homesController@index');
+Route::get('/about-us','aboutController@index');
+Route::get('/loginme','loginController@login');
+Route::get('/reserveindex','reserveController@index');
+// Route::get('/cancel','reserveController@cancel');
+Route::post('/reserveme','reserveController@reserve');
+Route::post('/reservedel','reserveController@delReserve');
+Route::get('/reserve','reserveController@showReserve');
+Route::get('/getPDF','PDFController@getPDF');
+Route::get('/course','courseController@getCourse');
+Route::get('/voucher','voucherController@getVoucher');
+Route::post('/exchange','voucherController@exchange');
+Route::get('/profile','profileController@index');
+Route::post('/changepass','profileController@changePass');
 
 Auth::routes();
-Route::get('/home', 'HomeController@admin');
-// Route::get('admin/promotions', 'PromotionsController@index');
 
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'],function(){
     Route::get('admin', 'AdminUsersController@index')->name('admin');

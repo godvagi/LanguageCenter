@@ -251,7 +251,7 @@
 										        		  </form>
 																</td>
 																<td>@{{ d.description }}</td>
-																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="'/images/promotions/' + d.img"  height="60" width="70"></td>
+																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="d.img"  height="60" width="70"></td>
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
 																<td>
 																	<form @submit.prevent = "deletePromotion(d.id)" method="post" :id="'del'+d.id" >
@@ -456,7 +456,7 @@
 							<h4 class="modal-title">@{{ d.name }}</h4>
 						</div>
 						<div class="modal-body">
-							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
+							<img :src="d.img"  height="100%" width="100%">
 						</div>
 						<div class="modal-footer">
 		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>

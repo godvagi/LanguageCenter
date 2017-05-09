@@ -226,10 +226,10 @@
 														<tr>
 																<th>ID</th>
 															  <th>voucher ID</th>
-																<th>Name</th>
-																<th>point</th>
+
+
 																<th>code</th>
-																<th>Image</th>
+
 																<th>Action</th>
 																<!-- <th>Time</th> -->
 														</tr>
@@ -238,10 +238,9 @@
 														<tr v-for="d in data">
 																<td>@{{ d.id }}</td>
 																<td>@{{ d.vou_id }}</td>
-																<td>@{{ d.name }}</td>
-																<td>@{{ d.point }}</td>
+														
 																<td>@{{ d.code }}</td>
-																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="d.img"  height="60" width="70"></td>
+
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
 																<td>
 																	<form @submit.prevent = "deleteVoucher(d.id)" method="post" :id="'del'+d.id" >
@@ -366,10 +365,10 @@
 							</form> -->
 
 							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
-								<div class="form-group">
+								<!-- <div class="form-group">
 												<label for="name">Voucher Name</label>
 												<input type="text" class="form-control" name="name"  id="name" placeholder="" required>
-								</div>
+								</div> -->
 								<div class="form-group">
 												<label for="name">Voucher ID</label>
 												<input type="text" class="form-control" name="vou_id"  id="vou_id" placeholder="" required>
@@ -379,25 +378,25 @@
 												<label for="img">Image</label>
 												<input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
 								</div> -->
-								<div class="form-group">
+								<!-- <div class="form-group">
 		                <div v-if="!image">
 
 												<label for="image">Select an image</label>
 		                    </div>
 		                <div v-else>
 		                    <img :src="image" width="500" height="300"/>
-		                    <!-- <button @click="removeImage">Remove image</button> -->
+
 												<br>
 												<br>
 		                </div>
 
 		                <input name="image" id="image" type="file" accept="image/*" class="form-control" @change="onFileChange">
-		            </div>
+		            </div> -->
 
-								<div class="form-group">
+								<!-- <div class="form-group">
 												<label for="total">Point</label>
 												<input type="text" class="form-control" name="point" id="point" placeholder="" required>
-								</div>
+								</div> -->
 								<div class="form-group">
 												<label for="code">code</label>
 												<input type="text" class="form-control" name="code" id="code"  placeholder="" required>

@@ -266,8 +266,9 @@
 											</div>
 										</div>
 									</div>
+									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
+									<!-- <button type="button" class="btn btn-success btn-fill pull-left" data-toggle="modal" data-target="#addImage">Add Image</button> -->
 
- 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
 
 
 
@@ -302,82 +303,6 @@
 		          <h4 class="modal-title">Add Subject</h4>
 		        </div>
 		        <div class="modal-body">
-							<!-- <div class="form-group">
-							        <label for="name">Promotion Name</label>
-							        <input type="text" class="form-control" v-model="name" id="name" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="img">Image</label>
-							        <input type="file" class="form-control"  id="img" v-model="img" accept="image/*" required>
-							</div>
-							<div class="form-group">
-							        <label for="startdate">Start Date</label>
-							        <input type="date" class="form-control" v-model="startdate" id="startdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="expdate">Exp Date</label>
-							        <input type="date" class="form-control" v-model="expdate" id="expdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="type">Discount Type</label>
-											<select  class="form-control" v-model="type" required>
-				                   <option value="" disabled selected>Please select type</option>
-				                   <option value="percent" >Percent</option>
-				                   <option value="baht" >Baht</option>
-				                 </select>
-							</div>
-
-							<div class="form-group">
-							        <label for="total">Discount Rate</label>
-							        <input type="text" class="form-control" v-model="total" id="total" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="descript">Descript</label>
-							       <textarea  class="form-control" rows="7" cols="60" name="des" placeholder="----description---" v-model="descript" > </textarea>
-							</div>
-							<button class="btn btn-success btn-fill" v-on:click="submit()">Submit</button> -->
-<!--
-							<form class="form-horizontal" id="data" role="form" method="POST" v-on:submit.prevent="submit" enctype="multipart/form-data">
-
-									{{ csrf_field() }}
-
-									<div class="form-group">
-									        <label for="name">Promotion Name</label>
-									        <input type="text" class="form-control" name="name" v-model="name" id="name" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="img">Image</label>
-									        <input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
-									</div>
-									<div class="form-group">
-									        <label for="startdate">Start Date</label>
-									        <input type="date" class="form-control" name="startdate" id="startdate" v-model="startdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="expdate">Exp Date</label>
-									        <input type="date" class="form-control" name="expdate" id="expdate" v-model="expdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="type">Discount Type</label>
-													<select  class="form-control" name="type" v-model="type" id="type" required>
-						                   <option value="" disabled selected>Please select type</option>
-						                   <option value="percent" >Percent</option>
-						                   <option value="baht" >Baht</option>
-						                 </select>
-									</div>
-
-									<div class="form-group">
-									        <label for="total">Discount Rate</label>
-									        <input type="text" class="form-control" name="total" v-model="total" id="total" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="descript">Description</label>
-									       <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" v-model="descript" > </textarea>
-									</div>
-									<button class="btn btn-success btn-fill" type="submit">Submit</button>
-
-							</form> -->
-
 							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
 
 								<div class="form-group">
@@ -424,6 +349,47 @@
 
 		    </div>
 		  </div>
+
+			<div class="modal fade" id="addImage" role="dialog">
+		    <div class="modal-dialog modal-lg">
+		      <!-- Modal content-->
+		      <div class="modal-content">
+						<div id="vue-add-image">
+
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Add Subject</h4>
+		        </div>
+		        <div class="modal-body">
+							<form @submit.prevent = "submitImage" method="post" id="addImageForm" enctype="multipart/form-data">
+								<div v-if="!image">
+										<label for="image">Select an image</label>
+										</div>
+								<div v-else>
+										<img :src="image" width="500" height="300"/>
+										<!-- <button @click="removeImage">Remove image</button> -->
+										<br>
+										<br>
+								</div>
+								<input name="image2" id="image2" type="file" accept="image/*" class="form-control" @change="onFileChange">
+								<br>
+								<br>
+            <button class="btn btn-success btn-fill" type="submit">Add Subject Image</button>
+        </form>
+
+		        </div>
+
+
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
+		        </div>
+					</div>
+
+		      </div>
+
+		    </div>
+		  </div>
+
 
 
 
@@ -516,6 +482,51 @@
 
 				}
     });
+
+		var vm8 = new Vue({
+    el: '#vue-add-image',
+    data: {
+        'image':''
+
+    },
+		  mounted: function(){
+				vm.getPromotions();
+			},
+    methods: {
+           onFileChange(e) {
+             var files = e.target.files || e.dataTransfer.files;
+             if (!files.length)
+               return;
+             this.createImage(files[0]);
+           },
+           createImage(file) {
+             var image = new Image();
+             var reader = new FileReader();
+             var vm6 = this;
+             reader.onload = (e) => {
+               vm6.image = e.target.result;
+             };
+             reader.readAsDataURL(file);
+           },
+           removeImage: function (e) {
+             this.image = '';
+           },
+           submitImage :function(){
+               var form = document.querySelector('#addImageForm');
+               var formdata = new FormData(form);
+               jQuery.ajax({
+              url: '/api/subjects/50',
+              data: formdata,
+              contentType: false,
+              processData: false,
+              type: 'PUT',
+              success: function(data){
+								console.log(data.success);
+              }
+            });
+					}
+    }
+});
 
 
 

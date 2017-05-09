@@ -85,7 +85,7 @@ class AdminSubjectsController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -97,7 +97,21 @@ class AdminSubjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      if ($file = $request->file('image2')) {
+      $path = public_path() . '/images/course-table.png';
+      if(file_exists($path)) {
+        unlink($path);
+      }
+        $filetype = $file->getClientOriginalExtension();
+        $file->move('images', "course-table.png");
+        return [
+            'success' => true,
+            'data' => $id
+          ];
+      }
+      return [
+        'success' => $request->hasfile('image2')
+        ];
     }
 
     /**

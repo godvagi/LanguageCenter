@@ -1082,8 +1082,8 @@ camelcase@^4.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
 caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000665"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000665.tgz#e84f4277935f295f546f8533cb0b410a8415b972"
+  version "1.0.30000664"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000664.tgz#e16316e5fdabb9c7209b2bf0744ffc8a14201f22"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"

@@ -40,22 +40,15 @@ class AdminVouchersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
       $voucher = new \App\voucher;
       $voucher->name = trim($request->name);
-      $voucher->vou_id = $request->vou_id;
+      $voucher->pro_id = $request->vou_id;
       $voucher->code = $request->code;
-      $voucher->point = $request->point;
-      if (!empty($voucher->vou_id) && $voucher->save()){
-        if ($file = $request->file('image')) {
-          $filetype = $file->getClientOriginalExtension();
-          // $name = time() . $file->getClientOriginalName();
-          // $filetype = $request->file('image')->getMimeType();\
-          $file->move('images/vouchers', "$voucher->id.$filetype");
-          $voucher->img = "/images/vouchers/$voucher->id.$filetype";
-          $voucher->save();
-        }
+      if (!empty($voucher->pro_id) && $voucher->save()){
+
           return [
             'success' => true,
             'data' => "voucher '{$voucher->name}' was saved with id: {$voucher->id}",

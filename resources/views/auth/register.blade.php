@@ -37,14 +37,17 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group">
-                          <label>role</label>
-                          <select  class="form-control" name="role"  id="role" required>
-                               <option value='user' >User</option>
-                               <option value='admin' >Admin</option>
-                             </select>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <label>role</label>
+                                  <select  class="form-control" name="role"  id="role" required>
+                                       <option value='user' >User</option>
+                                       <option value='admin' >Admin</option>
+                                     </select>
+                                </div>
+                            </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
