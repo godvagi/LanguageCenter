@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="/images/admin/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Admin Easy Language</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -49,43 +49,40 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
+                <a href="{{ url('/admin') }}" class="simple-text">
+                    Admin
                 </a>
             </div>
 
             <ul class="nav">
-                <li >
-                    <a href="{{ url('/admin') }}">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="{{ url('/admin/promotions') }}">
-                        <i class="pe-7s-user"></i>
-                        <p>Promotions</p>
-                    </a>
-                </li>
-								<li>
-										<a href="{{ url('/admin/users') }}">
-												<i class="pe-7s-note2"></i>
-												<p>users</p>
-										</a>
-								</li>
-								<li >
-										<a href="{{ url('/admin/subjects') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>subjects</p>
-										</a>
-								</li>
-                <!-- <li>
-                    <a href="icons.html">
-                        <i class="pe-7s-science"></i>
-                        <p>Icons</p>
-                    </a>
-                </li>
+
+							<li >
+									<a href="{{ url('/admin/users') }}">
+											<!-- <i class="pe-7s-note2"></i> -->
+											<i class="pe-7s-add-user"></i>
+											<p>users</p>
+									</a>
+							</li>
+							<li class="active">
+									<a href="{{ url('/admin/promotions') }}">
+											<!-- <i class="pe-7s-user"></i> -->
+											<i class="pe-7s-gift"></i>
+											<p>Promotions</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/subjects') }}">
+											<i class="pe-7s-news-paper"></i>
+											<p>subjects</p>
+									</a>
+							</li>
                 <li>
+                    <a href="{{ url('/admin/vouchers') }}">
+                        <i class="pe-7s-ticket"></i>
+                        <p>voucher</p>
+                    </a>
+                </li>
+              <!--   <li>
                     <a href="maps.html">
                         <i class="pe-7s-map-marker"></i>
                         <p>Maps</p>
@@ -155,9 +152,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li>
-                           <a href="">
-                               <p>Account</p>
-                            </a>
+
                         </li>
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -176,6 +171,12 @@
                                 <li><a href="#">Separated link</a></li>
                               </ul>
                         </li> -->
+												<li>
+													<a href="">
+															<p>{{ Auth::user()->email }}</p>
+													 </a>
+
+												</li>
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -199,12 +200,19 @@
 							<div class="row">
 									<div class="col-md-12">
 
-										<div class="card">
+										<div class="card" id="vue-app">
 													<div class="header">
-															<h4 class="title">All Promotions</h4>
+															<h4 class="title">All Promotions
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
+															<div class="input-group pull-right" style="width:250px">
+            										<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
+            											<div class="input-group-btn">
+                								<button class="btn btn-default" type="submit" v-on:click="searchName()"><i class="glyphicon glyphicon-search"></i></button>
+            										</div>
+        											</div>
+														</h4>
 													</div>
-													<div class="content table-responsive table-full-width" id="vue-app">
+													<div class="content table-responsive table-full-width" >
 
 													<table class="table table-hover table-striped">
 													<thead>
@@ -219,6 +227,7 @@
 																<th>description</th>
 																<th>Image</th>
 																<th>Action</th>
+																<!-- <th>Time</th> -->
 														</tr>
 													</thead>
 													<tbody>
@@ -229,7 +238,6 @@
 																<td>@{{ d.startdate }}</td>
 																<td>@{{ d.expdate }}</td>
 																<td>@{{ d.point }}</td>
-																<!-- <td>@{{ d.active }}</td> -->
 																<td>
 																	<form @submit.prevent = "updateActive(d.id)" method="post" :id="'del'+d.id" >
 																		<input type="hidden" name="id" :value="d.id" required>
@@ -243,7 +251,7 @@
 										        		  </form>
 																</td>
 																<td>@{{ d.description }}</td>
-																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="'/images/promotions/' + d.img"  height="60" width="70"></td>
+																<td><img data-toggle="modal" :data-target="'#modal'+d.id" :src="d.img"  height="60" width="70"></td>
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
 																<td>
 																	<form @submit.prevent = "deletePromotion(d.id)" method="post" :id="'del'+d.id" >
@@ -251,6 +259,7 @@
 										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
 										        		  </form>
 																</td>
+																<!-- <td>@{{ d.created_at }}<td> -->
 														</tr>
 													</tbody>
 													</table>
@@ -263,38 +272,13 @@
 
  									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Promotion</button>
 
-
-
-
-
-
-
 							</div>
 					</div>
 					<footer class="footer">
 							<div class="container-fluid">
 									<nav class="pull-left">
 											<ul>
-													<li>
-															<a href="#">
-																	Home
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Company
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Portfolio
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																 Blog
-															</a>
-													</li>
+
 											</ul>
 									</nav>
 									<p class="copyright pull-right">
@@ -417,7 +401,7 @@
 												<br>
 		                </div>
 
-		                <input name="image" id="image" type="file" class="form-control" @change="onFileChange">
+		                <input name="image" id="image" type="file" accept="image/*" class="form-control" @change="onFileChange">
 		            </div>
 								<div class="form-group">
 												<label for="active">Active</label>
@@ -472,7 +456,7 @@
 							<h4 class="modal-title">@{{ d.name }}</h4>
 						</div>
 						<div class="modal-body">
-							<img :src="'/images/promotions/' + d.img"  height="100%" width="100%">
+							<img :src="d.img"  height="100%" width="100%">
 						</div>
 						<div class="modal-footer">
 		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
@@ -511,12 +495,17 @@
 		var vm = new Vue({
         el: '#vue-app',
         data:{
-					'data':[]
+					'data':[],
+					'search':''
 				},
+				watch: {
+            search: function(){
+							this.searchName()
+            }
+        },
 				mounted: function(){
 					this.getPromotions();
 				},
-
 				methods:{
 					getPromotions: function(){
 						axios.get('/api/promotions', {
@@ -525,13 +514,13 @@
 								if(response.data.success) {
 									vm.data = response.data.data;
 									vmmodal.data = response.data.data;
+									// response.data.data.forEach(function(product) {
+    							// 	console.log(product['created_at']);
+									// });
 								}
-
             }).catch(function (error) {
-
                 alert('Error (see console log)');
                 console.log(error);
-
             });
 					},
 					deletePromotion :function(id){
@@ -560,7 +549,21 @@
 							 		vm.getPromotions();
 						 }
 					 });
-					}
+				 },
+				 searchName: function(){
+						 // console.log(id);
+						 jQuery.ajax({
+							 url: '/api/promotions/'+this.search,
+							 cache: false,
+							 contentType: false,
+							 processData: false,
+							 type: 'GET',
+							 success: function(response){
+								 vm.data = response.data;
+								 vmmodal.data = response.data;
+						}
+					});
+				}
 
 				}
     });
@@ -617,6 +620,7 @@
               success: function(data){
 								vm.getPromotions();
                 alert(data.data);
+								document.getElementById("addForm").reset();
               }
             });
 					}

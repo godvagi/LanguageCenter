@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="/images/admin/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Light Bootstrap Dashboard by Creative Tim</title>
+	<title>Admin Easy Language</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -48,37 +48,45 @@
     -->
 
     	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
-                </a>
-            </div>
+				<div class="logo">
+						<a href="{{ url('/admin') }}" class="simple-text">
+								Admin
+						</a>
+				</div>
 
             <ul class="nav">
-                <li >
-                    <a href="{{ url('/admin') }}">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li >
-                    <a href="{{ url('/admin/promotions') }}">
-                        <i class="pe-7s-user"></i>
-                        <p>Promotions</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/admin/users') }}">
-                        <i class="pe-7s-note2"></i>
-                        <p>users</p>
-                    </a>
-                </li>
-								<li class="active">
-										<a href="{{ url('/admin/subjects') }}">
-												<i class="pe-7s-news-paper"></i>
-												<p>subjects</p>
-										</a>
-								</li>
+							<!-- <li >
+									<a href="{{ url('/admin') }}">
+											<i class="pe-7s-graph"></i>
+											<p>Dashboard</p>
+									</a>
+							</li> -->
+							<li >
+									<a href="{{ url('/admin/users') }}">
+											<!-- <i class="pe-7s-note2"></i> -->
+											<i class="pe-7s-add-user"></i>
+											<p>users</p>
+									</a>
+							</li>
+							<li >
+									<a href="{{ url('/admin/promotions') }}">
+											<!-- <i class="pe-7s-user"></i> -->
+											<i class="pe-7s-gift"></i>
+											<p>Promotions</p>
+									</a>
+							</li>
+							<li class="active">
+									<a href="{{ url('/admin/subjects') }}">
+											<i class="pe-7s-news-paper"></i>
+											<p>subjects</p>
+									</a>
+							</li>
+							<li>
+									<a href="{{ url('/admin/vouchers') }}">
+											<i class="pe-7s-ticket"></i>
+											<p>voucher</p>
+									</a>
+							</li>
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -117,7 +125,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/promotions') }}">Subject</a>
+                    <a class="navbar-brand" href="{{ url('/admin/subjects') }}">Subjects</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <!-- <ul class="nav navbar-nav navbar-left">
@@ -176,6 +184,12 @@
                                 <li><a href="#">Separated link</a></li>
                               </ul>
                         </li> -->
+												<li>
+													<a href="">
+															<p>{{ Auth::user()->email }}</p>
+													 </a>
+
+												</li>
                         <li>
 													<a href="{{ route('logout') }}"
 															onclick="event.preventDefault();
@@ -199,12 +213,20 @@
 							<div class="row">
 									<div class="col-md-12">
 
-										<div class="card">
+										<div class="card" id="vue-app">
 													<div class="header">
-															<h4 class="title">All Promotions</h4>
+															<h4 class="title">All Subjects
+
+																<div class="input-group pull-right" style="width:250px">
+																	<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
+																		<div class="input-group-btn">
+																	<button class="btn btn-default" type="submit" v-on:click="searchName()"><i class="glyphicon glyphicon-search"></i></button>
+																	</div>
+																</div>
+															</h4>
 															<!-- <p class="category">Here is a subtitle for this table</p> -->
 													</div>
-													<div class="content table-responsive table-full-width" id="vue-app">
+													<div class="content table-responsive table-full-width" >
 
 													<table class="table table-hover table-striped">
 													<thead>
@@ -244,8 +266,9 @@
 											</div>
 										</div>
 									</div>
+									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
+									<!-- <button type="button" class="btn btn-success btn-fill pull-left" data-toggle="modal" data-target="#addImage">Add Image</button> -->
 
- 									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
 
 
 
@@ -259,26 +282,7 @@
 							<div class="container-fluid">
 									<nav class="pull-left">
 											<ul>
-													<li>
-															<a href="#">
-																	Home
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Company
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																	Portfolio
-															</a>
-													</li>
-													<li>
-															<a href="#">
-																 Blog
-															</a>
-													</li>
+
 											</ul>
 									</nav>
 									<p class="copyright pull-right">
@@ -299,82 +303,6 @@
 		          <h4 class="modal-title">Add Subject</h4>
 		        </div>
 		        <div class="modal-body">
-							<!-- <div class="form-group">
-							        <label for="name">Promotion Name</label>
-							        <input type="text" class="form-control" v-model="name" id="name" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="img">Image</label>
-							        <input type="file" class="form-control"  id="img" v-model="img" accept="image/*" required>
-							</div>
-							<div class="form-group">
-							        <label for="startdate">Start Date</label>
-							        <input type="date" class="form-control" v-model="startdate" id="startdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="expdate">Exp Date</label>
-							        <input type="date" class="form-control" v-model="expdate" id="expdate" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="type">Discount Type</label>
-											<select  class="form-control" v-model="type" required>
-				                   <option value="" disabled selected>Please select type</option>
-				                   <option value="percent" >Percent</option>
-				                   <option value="baht" >Baht</option>
-				                 </select>
-							</div>
-
-							<div class="form-group">
-							        <label for="total">Discount Rate</label>
-							        <input type="text" class="form-control" v-model="total" id="total" placeholder="" required>
-							</div>
-							<div class="form-group">
-							        <label for="descript">Descript</label>
-							       <textarea  class="form-control" rows="7" cols="60" name="des" placeholder="----description---" v-model="descript" > </textarea>
-							</div>
-							<button class="btn btn-success btn-fill" v-on:click="submit()">Submit</button> -->
-<!--
-							<form class="form-horizontal" id="data" role="form" method="POST" v-on:submit.prevent="submit" enctype="multipart/form-data">
-
-									{{ csrf_field() }}
-
-									<div class="form-group">
-									        <label for="name">Promotion Name</label>
-									        <input type="text" class="form-control" name="name" v-model="name" id="name" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="img">Image</label>
-									        <input type="file" class="form-control"  id="img" name="img"  v-on:change="onFileChange" accept="image/*" required>
-									</div>
-									<div class="form-group">
-									        <label for="startdate">Start Date</label>
-									        <input type="date" class="form-control" name="startdate" id="startdate" v-model="startdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="expdate">Exp Date</label>
-									        <input type="date" class="form-control" name="expdate" id="expdate" v-model="expdate" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="type">Discount Type</label>
-													<select  class="form-control" name="type" v-model="type" id="type" required>
-						                   <option value="" disabled selected>Please select type</option>
-						                   <option value="percent" >Percent</option>
-						                   <option value="baht" >Baht</option>
-						                 </select>
-									</div>
-
-									<div class="form-group">
-									        <label for="total">Discount Rate</label>
-									        <input type="text" class="form-control" name="total" v-model="total" id="total" placeholder="" required>
-									</div>
-									<div class="form-group">
-									        <label for="descript">Description</label>
-									       <textarea  class="form-control" rows="7" cols="60" name="descript" id="descript" placeholder="----description---" v-model="descript" > </textarea>
-									</div>
-									<button class="btn btn-success btn-fill" type="submit">Submit</button>
-
-							</form> -->
-
 							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
 
 								<div class="form-group">
@@ -422,6 +350,47 @@
 		    </div>
 		  </div>
 
+			<div class="modal fade" id="addImage" role="dialog">
+		    <div class="modal-dialog modal-lg">
+		      <!-- Modal content-->
+		      <div class="modal-content">
+						<div id="vue-add-image">
+
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Add Subject</h4>
+		        </div>
+		        <div class="modal-body">
+							<form @submit.prevent = "submitImage" method="post" id="addImageForm" enctype="multipart/form-data">
+								<div v-if="!image">
+										<label for="image">Select an image</label>
+										</div>
+								<div v-else>
+										<img :src="image" width="500" height="300"/>
+										<!-- <button @click="removeImage">Remove image</button> -->
+										<br>
+										<br>
+								</div>
+								<input name="image2" id="image2" type="file" accept="image/*" class="form-control" @change="onFileChange">
+								<br>
+								<br>
+            <button class="btn btn-success btn-fill" type="submit">Add Subject Image</button>
+        </form>
+
+		        </div>
+
+
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default btn-fill" data-dismiss="modal">Close</button>
+		        </div>
+					</div>
+
+		      </div>
+
+		    </div>
+		  </div>
+
+
 
 
 </body>
@@ -453,7 +422,13 @@
 		var vm = new Vue({
         el: '#vue-app',
         data:{
-					'data':[]
+					'data':[],
+					'search':''
+				},
+				watch: {
+						search: function(){
+							this.searchName()
+						}
 				},
 				mounted: function(){
 					this.getPromotions();
@@ -489,10 +464,69 @@
 									alert(data.data);
 						 }
 					 });
-					}
+					},
+ 				 searchName: function(){
+ 						 // console.log(id);
+ 						 jQuery.ajax({
+ 							 url: '/api/subjects/'+this.search,
+ 							 cache: false,
+ 							 contentType: false,
+ 							 processData: false,
+ 							 type: 'GET',
+ 							 success: function(response){
+ 								 vm.data = response.data;
+ 								 vmmodal.data = response.data;
+ 						}
+ 					});
+ 				}
 
 				}
     });
+
+		var vm8 = new Vue({
+    el: '#vue-add-image',
+    data: {
+        'image':''
+
+    },
+		  mounted: function(){
+				vm.getPromotions();
+			},
+    methods: {
+           onFileChange(e) {
+             var files = e.target.files || e.dataTransfer.files;
+             if (!files.length)
+               return;
+             this.createImage(files[0]);
+           },
+           createImage(file) {
+             var image = new Image();
+             var reader = new FileReader();
+             var vm6 = this;
+             reader.onload = (e) => {
+               vm6.image = e.target.result;
+             };
+             reader.readAsDataURL(file);
+           },
+           removeImage: function (e) {
+             this.image = '';
+           },
+           submitImage :function(){
+               var form = document.querySelector('#addImageForm');
+               var formdata = new FormData(form);
+               jQuery.ajax({
+              url: '/api/subjects/50',
+              data: formdata,
+              contentType: false,
+              processData: false,
+              type: 'PUT',
+              success: function(data){
+								console.log(data.success);
+              }
+            });
+					}
+    }
+});
 
 
 
@@ -538,6 +572,7 @@
               success: function(data){
 								vm.getPromotions();
                 alert(data.data);
+								document.getElementById("addForm").reset();
               }
             });
 					}

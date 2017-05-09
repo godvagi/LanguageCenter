@@ -1,0 +1,16 @@
+
+
+body{
+	background-image: url(http://econectti.com.br/login/assets/img/backgrounds/1.jpg);
+}
+#id {
+	height: 70px;
+	width: 70px;
+}
+#label{
+	color: white;
+	font-size:25px;
+}
+#table_time{
+	color: white;
+}

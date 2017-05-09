@@ -13,29 +13,16 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        // Schema::create('users', function (Blueprint $table) {
-        //     $table->increments('id');    // no
-        //     $table->string('name');
-        //     $table->string('email')->unique();
-        //     $table->string('password');
-        //     $table->string('role')->default('user');
-        //     $table->integer('point')
-        //     $table->rememberToken();
-        //     $table->timestamps();
-        // });
-
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('role')->default('user');
-            $table->integer('point')->default(0);
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-
+         Schema::create('users', function (Blueprint $table) {
+             $table->increments('id');
+             $table->string('name');
+             $table->string('email')->unqiue();
+             $table->string('password');
+             $table->integer('point')->default(0);
+             $table->string('role')->default('user');
+             $table->rememberToken();
+             $table->timestamps();
+         });
     }
 
     /**

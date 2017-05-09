@@ -1,4 +1,5 @@
-<header id="header">
+
+    <header id="header">
         <div class="top-bar">
             <div class="container">
                 <div class="row">
@@ -35,16 +36,118 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="/"><img src="images/ezLogo.png" alt="logo" style="width:55px;height:55px;"><img src="images/easy language.png" alt="logo" style="width:115px;height:52px;"></a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li id='navindex'><a href="{{url('/')}}">หน้าแรก</a></li>
-                        <li><a href="{{url('/about-us')}}">เกี่ยวกับเรา</a></li>
-                        <li><a href="services.html">คอร์ส</a></li>
-                        <li><a href="contact-us.html">ติดต่อเรา</a></li>
-                        <li id='navlogin'><a href="{{url('/login')}}">login</a></li>
+                      <!-- หน้าแรก -->
+                        <li><a href="/"
+                            onclick="event.preventDefault();
+                                     document.getElementById('home').submit();">
+                          หน้าแรก
+                        </a>
+                        <form id="home" action="/" method="get" style="display: none;">
+
+                            {{ csrf_field() }}
+                        </form></li>
+
+                        <!-- คอร์ส -->
+                        <li><a href="/course"
+                            onclick="event.preventDefault();
+                                     document.getElementById('course').submit();">
+                          คอร์สเรียน
+                        </a>
+                        <form id="course" action="/course" method="get" style="display: none;">
+
+                            {{ csrf_field() }}
+                        </form></li>
+
+                        <!-- ดาวน์โหลด -->
+                        <li><a href="/getPDF"
+                            onclick="event.preventDefault();
+                                     document.getElementById('load').submit();">
+                          ดาวน์โหลดฟอร์ม
+                        </a>
+                        <form id="load" action="/getPDF" method="get" style="display: none;">
+
+                            {{ csrf_field() }}
+                        </form></li>
+
+                        <!-- เกี่ยวกับเรา -->
+                        <li><a href="/about-us"
+                            onclick="event.preventDefault();
+                                     document.getElementById('about').submit();">
+                          เกี่ยวกับเรา
+                        </a>
+                        <form id="about" action="/about-us" method="get" style="display: none;">
+
+                            {{ csrf_field() }}
+                        </form></li>
+
+                       <!-- login -->
+                        @if (Auth::guest())
+                            <li><a href="/login">เข้าสู่ระบบ</a></li>
+
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::User()->email }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                  <!-- จอง -->
+                                  <li>
+                                      <a href="/profile"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('profile').submit();">
+                                        โปรไฟล์
+                                      </a>
+
+                                      <form id="profile" action="/profile" method="get" style="display: none;">
+
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
+                                  <li>
+                                      <a href="/voucher"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('voucher').submit();">
+                                        แลกVoucher
+                                      </a>
+
+                                      <form id="voucher" action="/voucher" method="get" style="display: none;">
+
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
+                                  <li>
+                                      <a href="/reserveindex"
+                                          onclick="event.preventDefault();
+                                                   document.getElementById('reserve').submit();">
+                                        จองเวลาเรียน
+                                      </a>
+
+                                      <form id="reserve" action="/reserveindex" method="get" style="display: none;">
+
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
+                                  <!-- logout -->
+                                    <li>
+                                      <<a href="{{ route('logout') }}"
+            															onclick="event.preventDefault();
+            														  document.getElementById('logout-form').submit();">
+            														  Logout
+            													</a>
+
+            													<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            															{{ csrf_field() }}
+            													</form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
 
                     </ul>
                 </div>
@@ -52,3 +155,6 @@
         </nav><!--/nav-->
 
     </header><!--/header-->
+     <main>
+      @yield('content1')
+    </main>

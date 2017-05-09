@@ -27,7 +27,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+    //Auth::User()->email;
 
     /**
      * Create a new controller instance.
@@ -36,32 +37,29 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest')->except('logout');
     }
-
     public function login(Request $request)
+  {
+    $this->validate($request, [
+        'email' => 'required|email',
+        'password' => ' required'
+      ]);
+    $form = $request->all();
+    if(Auth::attempt([
+      'email' => $request->email,
+      'password' => $request->password
+    ]))
     {
-      $this->validate($request, [
-          'email' => 'required|email',
-          'password' => ' required'
-        ]);
-      $form = $request->all();
-      if(Auth::attempt([
-        'email' => $request->email,
-        'password' => $request->password
-      ]))
-      {
-        $user =\App\User::where('email','=',$form['email'])->first();
-        if($user->is_admin()){
-          return redirect()->route('admin');
-        }
-        return redirect()->route('/');
+      $user =\App\User::where('email','=',$form['email'])->first();
+      if($user->is_admin()){
+        return redirect()->route('admin');
       }
-
-
-      return redirect()->back();
-
+      return redirect('/');
     }
 
 
+    return redirect()->back();
+
+  }
 }

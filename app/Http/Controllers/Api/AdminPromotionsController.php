@@ -32,6 +32,8 @@ class AdminPromotionsController extends Controller
         //
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -54,7 +56,7 @@ class AdminPromotionsController extends Controller
           // $name = time() . $file->getClientOriginalName();
           // $filetype = $request->file('image')->getMimeType();\
           $file->move('images/promotions', "$promotion->id.$filetype");
-          $promotion->img = "$promotion->id.$filetype";
+          $promotion->img = "/images/promotions/$promotion->id.$filetype";
           $promotion->save();
         }
           return [
@@ -81,7 +83,11 @@ class AdminPromotionsController extends Controller
      */
     public function show($id)
     {
-        //
+        $promotion = \App\Promotion::where('name','like',"%$id%")->get();
+        return [
+            'success' => true,
+            'data' => $promotion
+          ];
     }
 
     /**
