@@ -44,3 +44,15 @@ Route::group(['middleware' => 'auth'],function(){
     //   return view('student.index');
     // })->name('student');
 });
+
+
+
+Route::get('/login','loginController@index');
+Route::get('/','homeController@index');
+Route::get('/about-us','aboutController@index');
+Route::get('/loginme','loginController@login');
+Route::get('/reserveindex','reserveController@index');
+Route::post('/reserveme','reserveController@reserve');
+Route::post('/reservedel','reserveController@delReserve');
+Route::get('/reserve','reserveController@showReserve');
+Route::get('/getPDF','PDFController@getPDF');

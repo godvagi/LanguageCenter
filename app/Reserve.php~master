@@ -1,0 +1,14 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Reserve extends Model
+{
+<<<<<<< HEAD:app/Subject.php
+    protected $fillable = ['name','sub_id','type','price','hour','point','description'];
+=======
+    protected $table = 'reserve';
+>>>>>>> master:app/Reserve.php
+}
