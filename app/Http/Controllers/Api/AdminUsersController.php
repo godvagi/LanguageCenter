@@ -17,7 +17,11 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-
+      $users = \App\User::all();
+      return [
+          'success' => true,
+          'data' => $users
+      ];
     }
 
     /**
@@ -38,7 +42,7 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
-      $user = new \App\User;
+
     }
 
     /**
@@ -49,7 +53,11 @@ class AdminUsersController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = \App\User::where('email','like',"%$id%")->get();
+      return [
+          'success' => true,
+          'data' => $user
+        ];
     }
 
     /**
@@ -83,6 +91,10 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user = \App\User::find($id)->delete();
+      return [
+          'success' => true,
+          'data' => "Delete success!"
+        ];
     }
 }

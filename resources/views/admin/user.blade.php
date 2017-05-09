@@ -64,6 +64,12 @@
 											<p>users</p>
 									</a>
 							</li>
+							<li>
+									<a href="{{ url('/admin/usertable') }}">
+											<i class="pe-7s-id"></i>
+											<p>user table</p>
+									</a>
+							</li>
 							<li >
 									<a href="{{ url('/admin/promotions') }}">
 											<!-- <i class="pe-7s-user"></i> -->
@@ -77,12 +83,12 @@
 											<p>subjects</p>
 									</a>
 							</li>
-							<li>
+							<!-- <li>
 									<a href="{{ url('/admin/vouchers') }}">
 											<i class="pe-7s-ticket"></i>
 											<p>voucher</p>
 									</a>
-							</li>
+							</li> -->
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -172,7 +178,7 @@
 																				<input type="text" class="form-control" name="name" id="name" placeholder="Name" required> -->
 																				<label>Name</label>
 																				<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="name" required autofocus>
-																				<span class="help-block">
+																				<span class="text-danger">
 																						<strong>@{{name}}</strong>
 																				</span>
 																		</div>
@@ -183,7 +189,7 @@
 																		<div class="form-group">
 																			<label>E-mail</label>
 																			<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required>
-																			<span class="help-block">
+																			<span class="text-danger">
 																					@{{email}}
 																			</span>
 																		</div>
@@ -397,7 +403,6 @@
 
     },
     methods: {
-
         submitAddCourse: function () {
 						// alert('halo');
 					var form = document.querySelector('#addCourse');

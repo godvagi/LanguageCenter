@@ -63,6 +63,12 @@
 											<p>users</p>
 									</a>
 							</li>
+							<li>
+									<a href="{{ url('/admin/usertable') }}">
+											<i class="pe-7s-id"></i>
+											<p>user table</p>
+									</a>
+							</li>
 							<li class="active">
 									<a href="{{ url('/admin/promotions') }}">
 											<!-- <i class="pe-7s-user"></i> -->
@@ -76,12 +82,12 @@
 											<p>subjects</p>
 									</a>
 							</li>
-                <li>
+                <!-- <li>
                     <a href="{{ url('/admin/vouchers') }}">
                         <i class="pe-7s-ticket"></i>
                         <p>voucher</p>
                     </a>
-                </li>
+                </li> -->
               <!--   <li>
                     <a href="maps.html">
                         <i class="pe-7s-map-marker"></i>

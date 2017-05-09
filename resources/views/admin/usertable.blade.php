@@ -68,7 +68,7 @@
 											<p>users</p>
 									</a>
 							</li>
-							<li>
+							<li class="active">
 									<a href="{{ url('/admin/usertable') }}">
 											<i class="pe-7s-id"></i>
 											<p>user table</p>
@@ -81,18 +81,13 @@
 											<p>Promotions</p>
 									</a>
 							</li>
-							<li class="active">
+							<li >
 									<a href="{{ url('/admin/subjects') }}">
 											<i class="pe-7s-news-paper"></i>
 											<p>subjects</p>
 									</a>
 							</li>
-							<!-- <li>
-									<a href="{{ url('/admin/vouchers') }}">
-											<i class="pe-7s-ticket"></i>
-											<p>voucher</p>
-									</a>
-							</li> -->
+
                 <!-- <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
@@ -131,65 +126,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/admin/subjects') }}">Subjects</a>
+                    <a class="navbar-brand" href="{{ url('/admin/usertable') }}">User Table</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <!-- <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-								<p class="hidden-lg hidden-md">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul> -->
+
 
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- <li>
-                           <a href="">
-                               <p>Account</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <p>
-										Dropdown
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                              </ul>
-                        </li> -->
+
 												<li>
 													<a href="">
 															<p>{{ Auth::user()->email }}</p>
@@ -221,7 +164,7 @@
 
 										<div class="card" id="vue-app">
 													<div class="header">
-															<h4 class="title">All Subjects
+															<h4 class="title">All Users
 
 																<div class="input-group pull-right" style="width:250px">
 																	<input type="text" class="form-control" placeholder="Search" name="q" v-model="search">
@@ -237,29 +180,25 @@
 													<table class="table table-hover table-striped">
 													<thead>
 														<tr>
-																<th>Subject_ID</th>
+																<th>ID</th>
 																<th>Name</th>
-																<th>type</th>
-																<th>price</th>
-																<th>hour</th>
+																<th>email</th>
 																<th>point</th>
-																<th>description</th>
-																<th>Action</th>
+																<th>role</th>
+																<th>action</th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr v-for="d in data">
-																<td>@{{ d.sub_id }}</td>
+																<td>@{{ d.id }}</td>
 																<td>@{{ d.name }}</td>
-																<td>@{{ d.type }}</td>
-																<td>@{{ d.price }}</td>
-																<td>@{{ d.hour }}</td>
+																<td>@{{ d.email }}</td>
 																<td>@{{ d.point }}</td>
-																<td>@{{ d.description }}</td>
+																<td>@{{ d.role }}</td>
 																<!-- <td><button type="button" data-toggle="modal" :data-target="'#modal'+d.id"><img :src="'/images/promotions/' + d.img"  height="50" width="50"></button></td> -->
 																<td>
-																	<form @submit.prevent = "deletePromotion(d.sub_id)" method="post" :id="'del'+d.sub_id" >
-																		<input type="hidden" name="id" :value="d.sub_id" required>
+																	<form @submit.prevent = "deleteUser(d.id)" method="post" :id="'del'+d.id" >
+																		<input type="hidden" name="id" :value="d.id" required>
 										            		<button class="btn btn-danger btn-fill" type="submit" >Delete</button>
 										        		  </form>
 																</td>
@@ -272,16 +211,8 @@
 											</div>
 										</div>
 									</div>
-									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addPromo">Add Subject</button>
+									<button type="button" class="btn btn-success btn-fill pull-right" data-toggle="modal" data-target="#addUserModal">Add User</button>
 									<!-- <button type="button" class="btn btn-success btn-fill pull-left" data-toggle="modal" data-target="#addImage">Add Image</button> -->
-
-
-
-
-
-
-
-
 							</div>
 					</div>
 					<footer class="footer">
@@ -298,50 +229,80 @@
 					</footer>
         </div>
     </div>
-		  <div class="modal fade" id="addPromo" role="dialog">
+		  <div class="modal fade" id="addUserModal" role="dialog">
 		    <div class="modal-dialog modal-lg">
 		      <!-- Modal content-->
 		      <div class="modal-content">
-						<div id="vue-add-promotion">
+						<div id="vue-add-user">
 
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Add Subject</h4>
+		          <h4 class="modal-title">Add User</h4>
 		        </div>
 		        <div class="modal-body">
-							<form @submit.prevent = "submitForm" method="post" id="addForm" enctype="multipart/form-data">
+							<form @submit.prevent = "submitAddUser" method="post" id="addUser" enctype="multipart/form-data">
+							 {{ csrf_field() }}
+								<div class="row">
+									<div class="col-md-12">
+											<div class="form-group">
+													<!-- <label>Name</label>
+													<input type="text" class="form-control" name="name" id="name" placeholder="Name" required> -->
+													<label>Name</label>
+													<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="name" required autofocus>
+													<span class="text-danger">
+															<strong>@{{name}}</strong>
+													</span>
+											</div>
+									</div>
+									</div>
+								<div class="row">
+									<div class="col-md-12">
+											<div class="form-group">
+												<label>E-mail</label>
+												<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required>
+												<span class="text-danger">
+														@{{email}}
+												</span>
+											</div>
+									</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+													<div class="form-group">
+														<label>role</label>
+														<select  class="form-control" name="role"  id="role" required>
+																 <option value='user' >User</option>
+																 <option value='admin' >Admin</option>
+															 </select>
+													</div>
+											</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+													<div class="form-group ">
+														<label>password</label>
+														<input id="password" type="password" class="form-control" name="password"  required>
+														<span class="text-danger">
+																@{{password}}
+														</span>
+													</div>
+											</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+													<div class="form-group">
+														<label>confirm password</label>
+														<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+													</div>
+											</div>
+									</div>
 
-								<div class="form-group">
-												<label for="name">Subject ID</label>
-												<input type="text" class="form-control" name="sub_id"  id="sub_id" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="startdate">Name</label>
-												<input type="text" class="form-control" name="name" id="name" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="expdate">Type</label>
-												<input type="text" class="form-control" name="type" id="type"  placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="total">Price</label>
-												<input type="text" class="form-control" name="price" id="price" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="total">Hour</label>
-												<input type="text" class="form-control" name="hour" id="hour" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="total">Point</label>
-												<input type="text" class="form-control" name="point" id="point" placeholder="" required>
-								</div>
-								<div class="form-group">
-												<label for="descript">Description</label>
-											 <textarea  class="form-control" rows="7" cols="60" name="description" id="description" placeholder="----description---" > </textarea>
-								</div>
 
-            <button class="btn btn-success btn-fill" type="submit">Add Subject</button>
-        </form>
+
+								<button class="btn btn-info btn-fill pull-left" type="submit">Add User</button>
+
+						</form>
+						<div class="clearfix"></div>
 
 		        </div>
 
@@ -437,17 +398,16 @@
 						}
 				},
 				mounted: function(){
-					this.getPromotions();
+					this.getUsers();
 				},
 
 				methods:{
-					getPromotions: function(){
-						axios.get('/api/subjects', {
+					getUsers: function(){
+						axios.get('/api/users', {
             }).then(function (response) {
                 // console.log(response.data.data);
 								if(response.data.success) {
 									vm.data = response.data.data;
-
 								}
 
             }).catch(function (error) {
@@ -457,16 +417,16 @@
 
             });
 					},
-					deletePromotion :function(id){
+					deleteUser:function(id){
 							// console.log(id);
 							jQuery.ajax({
-						 		url: '/api/subjects/'+id,
+						 		url: '/api/users/'+id,
 						 		cache: false,
 						 		contentType: false,
 						 		processData: false,
 						 		type: 'DELETE',
 						 		success: function(data){
-							 		vm.getPromotions();
+							 		vm.getUsers();
 									alert(data.data);
 						 }
 					 });
@@ -474,7 +434,7 @@
  				 searchName: function(){
  						 // console.log(id);
  						 jQuery.ajax({
- 							 url: '/api/subjects/'+this.search,
+ 							 url: '/api/users/'+this.search,
  							 cache: false,
  							 contentType: false,
  							 processData: false,
@@ -489,99 +449,91 @@
 				}
     });
 
-		var vm8 = new Vue({
-    el: '#vue-add-image',
-    data: {
-        'image':''
-
-    },
-		  mounted: function(){
-				vm.getPromotions();
-			},
-    methods: {
-           onFileChange(e) {
-             var files = e.target.files || e.dataTransfer.files;
-             if (!files.length)
-               return;
-             this.createImage(files[0]);
-           },
-           createImage(file) {
-             var image = new Image();
-             var reader = new FileReader();
-             var vm6 = this;
-             reader.onload = (e) => {
-               vm6.image = e.target.result;
-             };
-             reader.readAsDataURL(file);
-           },
-           removeImage: function (e) {
-             this.image = '';
-           },
-           submitImage :function(){
-               var form = document.querySelector('#addImageForm');
-               var formdata = new FormData(form);
-               jQuery.ajax({
-              url: '/api/subjects/50',
-              data: formdata,
-              contentType: false,
-              processData: false,
-              type: 'PUT',
-              success: function(data){
-								console.log(data.success);
-              }
-            });
-					}
-    }
-});
+// 		var vm8 = new Vue({
+//     el: '#vue-add-image',
+//     data: {
+//         'image':''
+//
+//     },
+// 		  mounted: function(){
+// 				vm.getPromotions();
+// 			},
+//     methods: {
+//            onFileChange(e) {
+//              var files = e.target.files || e.dataTransfer.files;
+//              if (!files.length)
+//                return;
+//              this.createImage(files[0]);
+//            },
+//            createImage(file) {
+//              var image = new Image();
+//              var reader = new FileReader();
+//              var vm6 = this;
+//              reader.onload = (e) => {
+//                vm6.image = e.target.result;
+//              };
+//              reader.readAsDataURL(file);
+//            },
+//            removeImage: function (e) {
+//              this.image = '';
+//            },
+//            submitImage :function(){
+//                var form = document.querySelector('#addImageForm');
+//                var formdata = new FormData(form);
+//                jQuery.ajax({
+//               url: '/api/subjects/50',
+//               data: formdata,
+//               contentType: false,
+//               processData: false,
+//               type: 'PUT',
+//               success: function(data){
+// 								console.log(data.success);
+//               }
+//             });
+// 					}
+//     }
+// });
 
 
 
 		var vm2 = new Vue({
-    el: '#vue-add-promotion',
+    el: '#vue-add-user',
     data: {
-        'image':''
-
+			'password': '',
+			'name': '',
+			'email': ''
     },
 		  mounted: function(){
-				vm.getPromotions();
+				vm.getUsers();
 			},
     methods: {
-           onFileChange(e) {
-             var files = e.target.files || e.dataTransfer.files;
-             if (!files.length)
-               return;
-             this.createImage(files[0]);
-           },
-           createImage(file) {
-             var image = new Image();
-             var reader = new FileReader();
-             var vm4 = this;
-             reader.onload = (e) => {
-               vm4.image = e.target.result;
-             };
-             reader.readAsDataURL(file);
-           },
-           removeImage: function (e) {
-             this.image = '';
-           },
-           submitForm :function(){
-               var form = document.querySelector('#addForm');
-               var formdata = new FormData(form);
-              //  console.log(formdata);
-               jQuery.ajax({
-              url: '/api/subjects',
-              data: formdata,
-              cache: false,
-              contentType: false,
-              processData: false,
-              type: 'POST',
-              success: function(data){
-								vm.getPromotions();
-                alert(data.data);
-								document.getElementById("addForm").reset();
-              }
-            });
-					}
+			submitAddUser: function () {
+			 var form = document.querySelector('#addUser');
+				 var formdata = new FormData(form);
+				 console.log("hello "+formdata);
+					jQuery.ajax({
+						 url: '/register',
+						 data: formdata,
+						 cache: false,
+						 contentType: false,
+						 processData: false,
+						 type: 'POST',
+						 success: function(data){
+							alert("Add user success");
+						 document.getElementById("addUser").reset();
+						 vm2.email ="";
+						 vm2.name = "";
+						 vm2.password = "";
+						 },
+					 error: function (xhr, ajaxOptions, thrownError) {
+						 var jsonResponse = JSON.parse(xhr.responseText);
+						 vm2.email = jsonResponse["email"];
+						 vm2.name = jsonResponse["name"];
+						 vm2.password = jsonResponse["password"];
+					 }
+					 });
+
+			}
     }
 });
 
