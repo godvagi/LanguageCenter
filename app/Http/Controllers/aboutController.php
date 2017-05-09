@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class aboutController extends BaseController
 {
   public function index(Request $r){
-    return view('about');
+    return view('about2');
   }
 }
 ?>

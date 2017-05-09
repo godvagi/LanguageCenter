@@ -213,7 +213,16 @@
   </div>
 </main>
 @endsection
-
+<style type="text/css">
+  h2{
+    font-size: 40px;
+    color: white;
+  }
+  #label{
+    font-size: 25px;
+    color: white
+  }
+</style>
 <script>
   function cancle() {
     // var div = document.getElementById('seat');

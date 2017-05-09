@@ -81,7 +81,7 @@
 
                                             </div>
                                             <div class="media-body">
-                                              <!-- <form action="/changepass" method="post">
+                                              <form action="/changepass" method="post">
                                                 <input type='hidden' name='_token' value="{{ csrf_token() }}">
                                                 <input type='hidden' name='username' value="{{$username}}">
                                                 @foreach($user as $u)
@@ -91,7 +91,7 @@
                                                  <label id="label">รหัสผ่านใหม่</label><input type="password" name="newpass"><br>
                                                  <label id="label">ยืนยันรหัสผ่านใหม่</label><input type="password" name="confirm"><br>
                                                  <button type='submit' class="btn btn-primary">ยืนยัน</button>
-                                                </form> -->
+                                                </form>
                                             </div>
                                         </div>
                                      </div>
@@ -156,7 +156,23 @@
     </section><!--/#content-->
 
  @endsection
+<style type="text/css">
+#label{
+  color: white;
+  font-size: 50px;
+}
 
+  #label{
+  color: white;
+  font-size: 25px;
+}
+#show{
+  width:1200px;
+  height: 800px;
+  margin-left: 5px;
+
+}
+</style>
 
 
     <script src="js/jquery.js"></script>

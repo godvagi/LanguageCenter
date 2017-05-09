@@ -98,7 +98,7 @@
         <i class="fa fa-chevron-right"></i>
     </a>
 </section><!--/#main-slider-->
-
+<br>
 <div class="container">
     <form action="/exchange" method="post">
       <input type='hidden' name='_token' value="{{ csrf_token() }}">
@@ -116,35 +116,47 @@
          <<?php// echo $pro ?>
          <input type='hidden' id="point_promotion" value="{{$p->point}}">
       @endforeach -->
+     
       @foreach($pro as $p)
-        <option id="{{$p->point}}">{{$p->name}}</option>
-        <label type='hidden' id="point_promotion" value="{{$p->point}}"></label>
+        <option id="point_promotion" name="{{$p->point}}">{{$p->name}}</option>
+        
      @endforeach
       </select>
       <button id="F" type="submit"  class="btn btn-success" onclick="checkPoint()">แลก</button>
-      <button id="T"type="submit"  class="btn btn-success" onclick="checkPoint()" style="display:none">แลก</button>
+  
+  
     </form>
 </div>
 
 @stop
+<style type="text/css">
+  #show_point{
+    color: white;
+    font-size: 25px;
+  }
+</style>
 <script>
-
-
   function checkPoint(){
-    var p = document.getElementById("point").value-document.getElementById("point_promotion").value
-    if (p<=0){
+    // var p = document.getElementById("point").value-document.getElementById("point_promotion").value
+    // alert(document.getElementById("point").value)
+    var point_user = document.getElementById("point").value;
+    var point_pro = document.getElementById("point_promotion").getAttribute("name");
+    var p = point_user-point_pro;
+     alert(point_pro+" "+point_user+"- "+p);
+    location.reload();
+    if (p<0){
         alert("คุณมีคะแนนไม่พอสำหรับแลกโปรโมชั่นนี้")
     }
     else{
+
       document.getElementById("show_point").innerHTML="point:"+p;
+
 
     }
 
-  }
-    function change(){
-      document.getElementById("show_point").value=p;
 
   }
+  
 </script>
 
     <script src="js/jquery.js"></script>

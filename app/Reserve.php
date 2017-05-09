@@ -9,6 +9,6 @@ class Reserve extends Model
 
     protected $fillable = ['i','id','date','time','status','sub_id'];
 
-    protected $table = 'reserve';
+    protected $table = 'reserves';
 
 }
